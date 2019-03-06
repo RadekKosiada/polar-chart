@@ -53,20 +53,47 @@ function drawPolarChart(options, appData) {
     var numberOfBars = Object.keys(appData).length;    
     // array with names of all dimensions
     var nameOfBars = Object.keys(appData);
+   console.log(appData.CVCs)
 
     //   console.log(arc(appData));
 
-        var arc = d3.svg.arc()
-            .innerRadius(30)
-            .outerRadius(90)
-            .startAngle(0)
-            .endAngle(3) 
+    for (var elem in appData) {
+        console.log(elem)
+        console.log(appData[elem])
+    }
+
+        var createBars = d3.svg.arc()
+            .innerRadius(options.size/options.levels/2)
+            .outerRadius(250)
+            .startAngle(0)           
+            .endAngle(Math.PI*2/numberOfBars)
+            .padAngle(0.25)
+            .padRadius(10);
+
+        var createBars2 = d3.svg.arc()
+            .innerRadius(options.size/options.levels/2)
+            .outerRadius(400)
+
+            // .startAngle(function(d, i) {console.log("fired"); return (i * 2 * Math.PI) / numberOfBars;})
+            // .endAngle(function(d, i) { return ((i +1) * 2 * Math.PI) / numberOfBars;})
+            .startAngle(function(d, i) {console.log("fired"); return (i * Math.PI * 2) / numberOfBars; })
+            .endAngle((function(d, i) {console.log("fired"); return ((i + 1) * Math.PI * 2) / numberOfBars; }))
+            .padAngle(0.25)
+            .padRadius(10);
 
         svg.append("path")
-            .attr("d", arc)
+            .attr("d", createBars)
             .attr("fill", "red")
             .attr("transform", "translate(" + options.size/2 + "," + options.size/2 + ")")
-            .attr("fill-opacity", "0.75")
+            .attr("fill-opacity", "0.95");
+        
+        svg.append("path")
+            // .data(appData)
+            // .enter()
+            .attr("d", createBars2)
+            .attr("fill", "blue")
+            .attr("transform", "translate(" + options.size/2 + "," + options.size/2 + ")")
+            .attr("fill-opacity", "0.95")
 
     
 }
