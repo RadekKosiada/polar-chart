@@ -64,40 +64,67 @@ function drawPolarChart(options, appData) {
     }
     returnsBarsIndex();
 
-    function appDataLoop() {
-       var arr = []
-        for (var key in appData) {
-            console.log("KEYS: ", key)
+    function getBarsHeight() {
+       var heightsArr = [];
+        for (var key in appData) {          
             console.log("VaLUES:", appData[key])
             // I am adding here innerRadius, 
-            //as the bars start from the innerRadius and not 0 (middle of the svg);
-            arr.push(appData[key] + innerRadius)   
+            //as the bars start from it and not 0 (middle of the svg);
+            heightsArr.push(appData[key] + innerRadius)   
         }
-        return arr;  
+        return heightsArr;  
     }
-    appDataLoop();
-    var barsHeight = appDataLoop();
-    console.log("KEYYYYYYYS: ", barsHeight)
+  
+    var barsHeights = getBarsHeight();
 
-    var createBars = d3.svg.arc()
+
+    function getBarsLabels() {
+        var labelsArr = [];
+        console.log("KEYS: ", key)
+        for(var key in appData) {
+            labelsArr.push(key)
+        }
+        return labelsArr;
+    }
+
+    var barsLabels = getBarsLabels();
+    console.log(barsLabels);
+
+    //https://d3indepth.com/shapes/
+    var createBars = d3.arc()
         .innerRadius(innerRadius)
         .startAngle(function (d, i) { console.log("fired"); return (i * 2 * Math.PI) / numberOfBars; })
         .endAngle(function (d, i) { return ((i + 1) * 2 * Math.PI) / numberOfBars; })
         .outerRadius(function (d, i) { return d*2; })
-        .padAngle(0.25)
-        .padRadius(10);
+        .padAngle(options.padAngle)
+        .padRadius(options.padRadius);
 
     var bars = svg.selectAll("path")
-        .data(barsHeight)
-        .enter().append("path")
+        .data(barsHeights)
+        .enter()
+        .append("path")
         .attr("fill", "grey")
-        .attr("fill-opacity", "0.85")
+        .attr("fill-opacity", "0.85")        
         .attr("d", createBars)
         .attr("transform", "translate(" + options.size / 2 + "," + options.size / 2 + ")")
+
+
+    //function that will create another arc to append text elements to it;
+    var labelsArc = d3.arc()
+    .innerRadius(innerRadius*options.levels)
+    .outerRadius(innerRadius*options.levels-innerRadius)
+    .startAngle(0)
+    .endAngle(2 * Math.PI);
+
+    //creating another arc => anchor for labels;
+    var labelsAnchor = svg.append("path")
+        .attr("class", "arc")
+        .attr("transform", "translate(" + options.size / 2 + "," + options.size / 2 + ")")
+        .attr("fill", "grey")
+        .attr("fill-opacity", 0.4)
+        .attr("d", labelsArc);
+
 }
-
-
-
 
 
 
@@ -115,6 +142,8 @@ var polarChartOptions = {
     levels: 10,
     dashesWidth: 2,
     dashesLength: 2,
+    padAngle: 0.2, //specifies padding in radians (the angle of the padding) of the bars;
+    padRadius: 20, //defines the linear distance between the bars; 
 }
 
 drawPolarChart(polarChartOptions, app._data.chartData);

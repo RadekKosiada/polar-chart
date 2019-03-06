@@ -8,6 +8,6 @@ body {
 
 .arc {
     border: solid black 1px;
-    fill: red;
+    fill: grey;
     stroke: red;
 }
