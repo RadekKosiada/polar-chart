@@ -55,12 +55,23 @@ function drawPolarChart(options, appData) {
     var nameOfBars = Object.keys(appData);
    console.log(appData.CVCs)
 
-    //   console.log(arc(appData));
-
-    for (var elem in appData) {
-        console.log(elem)
-        console.log(appData[elem])
+    function returnsBarsIndex() {
+        nameOfBars.forEach(function(elem, i) {
+            console.log(i)
+            return i;
+        });
     }
+    returnsBarsIndex();
+   
+
+    function appDataLoop() {
+        for (var key in appData) {
+            console.log("KEYS: ", key)
+            console.log("VaLUES:", appData[key])   
+        }
+    }
+    appDataLoop();
+    
 
         var createBars = d3.svg.arc()
             .innerRadius(options.size/options.levels/2)
