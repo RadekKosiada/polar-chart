@@ -50,70 +50,70 @@ function drawPolarChart(options, appData) {
         .attr("stroke-width", options.dashesWidth)
         .attr("fill", "none");
 
-    var numberOfBars = Object.keys(appData).length;    
+    var numberOfBars = Object.keys(appData).length;
     // array with names of all dimensions
     var nameOfBars = Object.keys(appData);
-   console.log(appData.CVCs)
+    console.log(appData.CVCs)
 
     function returnsBarsIndex() {
-        nameOfBars.forEach(function(elem, i) {
+        nameOfBars.forEach(function (elem, i) {
             console.log(i)
             return i;
         });
     }
     returnsBarsIndex();
-   
 
     function appDataLoop() {
-        dataObj = {};
+       var arr = []
         for (var key in appData) {
             console.log("KEYS: ", key)
-            console.log("VaLUES:", appData[key]) 
+            console.log("VaLUES:", appData[key])
+            arr.push(appData[key])   
         }
+        return arr;
+       
     }
     appDataLoop();
-    
+    var barsHeight = appDataLoop();
+    console.log("KEYYYYYYYS: ", barsHeight)
 
-        var createBars = d3.svg.arc()
-            .innerRadius(options.size/options.levels/2)
-            .outerRadius(250)
-            .startAngle(0)           
-            .endAngle(Math.PI*2/numberOfBars)
-            .padAngle(0.25)
-            .padRadius(10);
 
-        var createBars2 = d3.svg.arc()
-            .innerRadius(options.size/options.levels/2)
-            .outerRadius(400)
+    // var createBars = d3.svg.arc()
+    //     .innerRadius(options.size / options.levels / 2)
+    //     .outerRadius(250)
+    //     .startAngle(0)
+    //     .endAngle(Math.PI * 2 / numberOfBars)
+    //     .padAngle(0.25)
+    //     .padRadius(10);
 
-            // .startAngle(function(d, i) {console.log("fired"); return (i * 2 * Math.PI) / numberOfBars;})
-            // .endAngle(function(d, i) { return ((i +1) * 2 * Math.PI) / numberOfBars;})
-            .startAngle(
-                nameOfBars.forEach(function(elem, i) {
-                    console.log((i * Math.PI * 2) / numberOfBars); 
-                    return (i * Math.PI * 2) / numberOfBars; 
-                }))
-            .endAngle(
-                nameOfBars.forEach(function(elem, i) {
-                    console.log(((i + 1) * Math.PI * 2) / numberOfBars); 
-                    return ((i + 1) * Math.PI * 2) / numberOfBars; 
-            }))
-            .padAngle(0.25)
-            .padRadius(10);
+    var createBars2 = d3.svg.arc()
+        .innerRadius(options.size / options.levels / 2)
+        .startAngle(function (d, i) { console.log("fired"); return (i * 2 * Math.PI) / numberOfBars; })
+        .endAngle(function (d, i) { return ((i + 1) * 2 * Math.PI) / numberOfBars; })
+        .outerRadius(function (d, i) { return d*2; })
+        .padAngle(0.25)
+        .padRadius(10);
 
-        svg.append("path")
-            .attr("d", createBars)
-            .attr("fill", "red")
-            .attr("transform", "translate(" + options.size/2 + "," + options.size/2 + ")")
-            .attr("fill-opacity", "0.95");
-        
-        svg.append("path")
-            .attr("d", createBars2)
-            .attr("fill", "blue")
-            .attr("transform", "translate(" + options.size/2 + "," + options.size/2 + ")")
-            .attr("fill-opacity", "0.95")
-           
-    
+    // svg.append("path")
+    //     .attr("d", createBars)
+    //     .attr("fill", "red")
+    //     .attr("transform", "translate(" + options.size / 2 + "," + options.size / 2 + ")")
+    //     .attr("fill-opacity", "0.95");
+
+    // svg.append("path")
+    //     .attr("d", createBars2)
+    //     .attr("fill", "blue")
+    //     .attr("transform", "translate(" + options.size / 2 + "," + options.size / 2 + ")")
+    //     .attr("fill-opacity", "0.95")
+
+    var segments = svg.selectAll("path")
+        .data(barsHeight)
+        .enter().append("path")
+        // .each(function (d) { console.log(d); d.outerRadius = 0; })
+        .style("fill", "blue")
+        .attr("d", createBars2)
+        .attr("transform", "translate(" + options.size / 2 + "," + options.size / 2 + ")")
+
 }
 
 
