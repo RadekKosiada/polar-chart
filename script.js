@@ -65,23 +65,23 @@ function drawPolarChart(options, appData) {
     returnsBarsIndex();
 
     function getBarsHeight() {
-       var heightsArr = [];
-        for (var key in appData) {          
+        var heightsArr = [];
+        for (var key in appData) {
             console.log("VaLUES:", appData[key])
             // I am adding here innerRadius, 
             //as the bars start from it and not 0 (middle of the svg);
-            heightsArr.push(appData[key] + innerRadius)   
+            heightsArr.push(appData[key] + innerRadius)
         }
-        return heightsArr;  
+        return heightsArr;
     }
-  
+
     var barsHeights = getBarsHeight();
 
 
     function getBarsLabels() {
         var labelsArr = [];
         console.log("KEYS: ", key)
-        for(var key in appData) {
+        for (var key in appData) {
             labelsArr.push(key)
         }
         return labelsArr;
@@ -95,7 +95,7 @@ function drawPolarChart(options, appData) {
         .innerRadius(innerRadius)
         .startAngle(function (d, i) { console.log("fired"); return (i * 2 * Math.PI) / numberOfBars; })
         .endAngle(function (d, i) { return ((i + 1) * 2 * Math.PI) / numberOfBars; })
-        .outerRadius(function (d, i) { return d*2; })
+        .outerRadius(function (d, i) { return d * 2; })
         .padAngle(options.padAngle)
         .padRadius(options.padRadius);
 
@@ -104,7 +104,7 @@ function drawPolarChart(options, appData) {
         .enter()
         .append("path")
         .attr("fill", "grey")
-        .attr("fill-opacity", "0.85")        
+        .attr("fill-opacity", "0.85")
         .attr("d", createBars)
         .attr("transform", "translate(" + options.size / 2 + "," + options.size / 2 + ")")
 
@@ -112,16 +112,16 @@ function drawPolarChart(options, appData) {
         .data(barsLabels)
         .enter()
         .append("text")
-        .text(function(d, i) { return d;})
+        .text(function (d, i) { return d; })
 
     var labelsGroup = svg.append("g");
 
     //function that will create another arc to append text elements to it;
     var labelsArc = d3.arc()
-    .innerRadius(innerRadius*options.levels)
-    .outerRadius(innerRadius*options.levels-innerRadius)
-    .startAngle(0)
-    .endAngle(2 * Math.PI);
+        .innerRadius(innerRadius * options.levels)
+        .outerRadius(innerRadius * options.levels - innerRadius)
+        .startAngle(0)
+        .endAngle(2 * Math.PI);
 
     //creating another arc => anchor for labels;
     labelsGroup.append("path")
@@ -130,13 +130,28 @@ function drawPolarChart(options, appData) {
         .attr("fill", "grey")
         .attr("fill-opacity", 0.4)
         .attr("d", labelsArc);
-    
+
     labelsGroup.selectAll("text")
         .data(barsLabels)
         .enter()
         .append("text")
         .attr("class", "labels")
-        .text(function(d, i) { return d;})
+        .text(function (d, i) { return d; })
+
+    var numbersGroup = svg.append("g")
+        .attr("stroke", "red")
+        .attr("fill", "red")
+        .attr("transform", "translate(100, 100)")
+        // .append("rect")
+        // .attr("width", 100)
+        // .attr("height", 100)
+    
+    numbersGroup.selectAll("text")
+        .data(options.levels)
+        .enter()
+        .attr("class", "numbers")
+        .append("text")
+        .text(function (d, i) { return i; })
 
     var line = svg.append("line")
         .attr("x1", options.size / 2)
@@ -146,7 +161,7 @@ function drawPolarChart(options, appData) {
         .attr("class", "line")
         .attr("stroke-width", 2)
         .attr("stroke", "black");
-    
+
 
 }
 
