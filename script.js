@@ -65,9 +65,10 @@ function drawPolarChart(options, appData) {
    
 
     function appDataLoop() {
+        dataObj = {};
         for (var key in appData) {
             console.log("KEYS: ", key)
-            console.log("VaLUES:", appData[key])   
+            console.log("VaLUES:", appData[key]) 
         }
     }
     appDataLoop();
@@ -87,8 +88,16 @@ function drawPolarChart(options, appData) {
 
             // .startAngle(function(d, i) {console.log("fired"); return (i * 2 * Math.PI) / numberOfBars;})
             // .endAngle(function(d, i) { return ((i +1) * 2 * Math.PI) / numberOfBars;})
-            .startAngle(function(d, i) {console.log("fired"); return (i * Math.PI * 2) / numberOfBars; })
-            .endAngle((function(d, i) {console.log("fired"); return ((i + 1) * Math.PI * 2) / numberOfBars; }))
+            .startAngle(
+                nameOfBars.forEach(function(elem, i) {
+                    console.log((i * Math.PI * 2) / numberOfBars); 
+                    return (i * Math.PI * 2) / numberOfBars; 
+                }))
+            .endAngle(
+                nameOfBars.forEach(function(elem, i) {
+                    console.log(((i + 1) * Math.PI * 2) / numberOfBars); 
+                    return ((i + 1) * Math.PI * 2) / numberOfBars; 
+            }))
             .padAngle(0.25)
             .padRadius(10);
 
@@ -99,13 +108,11 @@ function drawPolarChart(options, appData) {
             .attr("fill-opacity", "0.95");
         
         svg.append("path")
-            // .data(appData)
-            // .enter()
             .attr("d", createBars2)
             .attr("fill", "blue")
             .attr("transform", "translate(" + options.size/2 + "," + options.size/2 + ")")
             .attr("fill-opacity", "0.95")
-
+           
     
 }
 
