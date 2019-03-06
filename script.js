@@ -54,6 +54,8 @@ function drawPolarChart(options, appData) {
     // array with names of all dimensions
     var nameOfBars = Object.keys(appData);
     var innerRadius = options.size / options.levels / 2;
+    var outerRadius =  50;
+    console.log(outerRadius);
     console.log(appData.CVCs)
 
     function returnsBarsIndex() {
@@ -76,7 +78,7 @@ function drawPolarChart(options, appData) {
     }
 
     var barsHeights = getBarsHeight();
-
+    console.log(barsHeights);
 
     function getBarsLabels() {
         var labelsArr = [];
@@ -90,12 +92,22 @@ function drawPolarChart(options, appData) {
     var barsLabels = getBarsLabels();
     console.log(barsLabels);
 
+
+    var chartScale =  d3.scaleLinear()
+    //heights of the bars
+    .domain([0, theHighestBar])
+    //size of svg divided by two as we want radius;
+    .range([0, options.size/2]);
+
+    var y = d3.scaleRadial()
+    .range([innerRadius, outerRadius]);
+
     //https://d3indepth.com/shapes/
     var createBars = d3.arc()
         .innerRadius(innerRadius)
         .startAngle(function (d, i) { console.log("fired"); return (i * 2 * Math.PI) / numberOfBars; })
         .endAngle(function (d, i) { return ((i + 1) * 2 * Math.PI) / numberOfBars; })
-        .outerRadius(function (d, i) { return d * 2; })
+        .outerRadius(function (d, i) {console.log('DDDDD',d); return y(d); })
         .padAngle(options.padAngle)
         .padRadius(options.padRadius);
 
@@ -117,19 +129,19 @@ function drawPolarChart(options, appData) {
     var labelsGroup = svg.append("g");
 
     //function that will create another arc to append text elements to it;
-    var labelsArc = d3.arc()
-        .innerRadius(innerRadius * options.levels)
-        .outerRadius(innerRadius * options.levels - innerRadius)
-        .startAngle(0)
-        .endAngle(2 * Math.PI);
+    // var labelsArc = d3.arc()
+    //     .innerRadius(innerRadius * options.levels)
+    //     .outerRadius(innerRadius * options.levels - innerRadius)
+    //     .startAngle(0)
+    //     .endAngle(2 * Math.PI);
 
-    //creating another arc => anchor for labels;
-    labelsGroup.append("path")
-        .attr("class", "arc")
-        .attr("transform", "translate(" + options.size / 2 + "," + options.size / 2 + ")")
-        .attr("fill", "grey")
-        .attr("fill-opacity", 0.4)
-        .attr("d", labelsArc);
+    // //creating another arc => anchor for labels;
+    // labelsGroup.append("path")
+    //     .attr("class", "arc")
+    //     .attr("transform", "translate(" + options.size / 2 + "," + options.size / 2 + ")")
+    //     .attr("fill", "grey")
+    //     .attr("fill-opacity", 0.4)
+    //     .attr("d", labelsArc);
 
     labelsGroup.selectAll("text")
         .data(barsLabels)
@@ -153,17 +165,12 @@ function drawPolarChart(options, appData) {
         .append("text")
         .text(function (d, i) { return i; })
 
-    // var line = svg.append("line")
-    //     .attr("x1", options.size / 2)
-    //     .attr("y1", options.size / 2 - innerRadius)
-    //     .attr("x2", options.size / 2)
-    //     .attr("y2", 0)
-    //     .attr("class", "line")
-    //     .attr("stroke-width", 2)
-    //     .attr("stroke", "black");
+    /// AXIS /////////////////////////////////
 
     //finding the highest bar hight for the scale; 
-    var theHighestBar = Math.max(...barsHeights);
+    //innerRadius needs to be substracted as we add it in 'getBarsHeight()'
+    var theHighestBar = Math.max(...barsHeights) - innerRadius;
+    console.log(theHighestBar)
 
     // https://www.dashingd3js.com/d3js-axes
     var axisScale = d3.scaleLinear()
@@ -174,8 +181,8 @@ function drawPolarChart(options, appData) {
 
     var yAxis = d3.axisLeft()
         .scale(axisScale)
-        .ticks(options.levels);
-    
+        //https://github.com/d3/d3-axis
+        // .ticks()
 
     var yAxisGroup = svg.append("g")
         .attr("transform", "translate(" + options.size / 2 + "," + ((options.size / 2) - innerRadius) + ")")
