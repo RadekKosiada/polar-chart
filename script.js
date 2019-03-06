@@ -162,6 +162,20 @@ function drawPolarChart(options, appData) {
         .attr("stroke-width", 2)
         .attr("stroke", "black");
 
+    //finding the highest bar hight for the scale; 
+    var theHighestBar = Math.max(...barsHeights);
+
+    var y = d3.scaleLinear()
+        //heights of the bars
+        .domain([0, theHighestBar])
+        //size of svg
+        .range([0, options.size/2]);
+
+    var yAxis = d3.axisLeft()
+        .scale(y);
+    console.log(yAxis);
+    
+
 
 }
 
