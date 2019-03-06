@@ -153,27 +153,33 @@ function drawPolarChart(options, appData) {
         .append("text")
         .text(function (d, i) { return i; })
 
-    var line = svg.append("line")
-        .attr("x1", options.size / 2)
-        .attr("y1", options.size / 2 - innerRadius)
-        .attr("x2", options.size / 2)
-        .attr("y2", 0)
-        .attr("class", "line")
-        .attr("stroke-width", 2)
-        .attr("stroke", "black");
+    // var line = svg.append("line")
+    //     .attr("x1", options.size / 2)
+    //     .attr("y1", options.size / 2 - innerRadius)
+    //     .attr("x2", options.size / 2)
+    //     .attr("y2", 0)
+    //     .attr("class", "line")
+    //     .attr("stroke-width", 2)
+    //     .attr("stroke", "black");
 
     //finding the highest bar hight for the scale; 
     var theHighestBar = Math.max(...barsHeights);
 
-    var y = d3.scaleLinear()
+    // https://www.dashingd3js.com/d3js-axes
+    var axisScale = d3.scaleLinear()
         //heights of the bars
         .domain([0, theHighestBar])
         //size of svg
-        .range([0, options.size/2]);
+        .range([0, -options.size/2]);
 
     var yAxis = d3.axisLeft()
-        .scale(y);
-    console.log(yAxis);
+        .scale(axisScale)
+        .ticks(options.levels);
+    
+
+    var yAxisGroup = svg.append("g")
+        .attr("transform", "translate(" + options.size / 2 + "," + ((options.size / 2) - innerRadius) + ")")
+        .call(yAxis);
     
 
 
