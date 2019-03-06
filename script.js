@@ -108,6 +108,13 @@ function drawPolarChart(options, appData) {
         .attr("d", createBars)
         .attr("transform", "translate(" + options.size / 2 + "," + options.size / 2 + ")")
 
+    bars.selectAll("text")
+        .data(barsLabels)
+        .enter()
+        .append("text")
+        .text(function(d, i) { return d;})
+
+    var labelsGroup = svg.append("g");
 
     //function that will create another arc to append text elements to it;
     var labelsArc = d3.arc()
@@ -117,15 +124,31 @@ function drawPolarChart(options, appData) {
     .endAngle(2 * Math.PI);
 
     //creating another arc => anchor for labels;
-    var labelsAnchor = svg.append("path")
+    labelsGroup.append("path")
         .attr("class", "arc")
         .attr("transform", "translate(" + options.size / 2 + "," + options.size / 2 + ")")
         .attr("fill", "grey")
         .attr("fill-opacity", 0.4)
         .attr("d", labelsArc);
+    
+    labelsGroup.selectAll("text")
+        .data(barsLabels)
+        .enter()
+        .append("text")
+        .attr("class", "labels")
+        .text(function(d, i) { return d;})
+
+    var line = svg.append("line")
+        .attr("x1", options.size / 2)
+        .attr("y1", options.size / 2 - innerRadius)
+        .attr("x2", options.size / 2)
+        .attr("y2", 0)
+        .attr("class", "line")
+        .attr("stroke-width", 2)
+        .attr("stroke", "black");
+    
 
 }
-
 
 
 // storing all the options of the chart in an object;
