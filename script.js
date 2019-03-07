@@ -120,66 +120,65 @@ function drawPolarChart(options, appData) {
         .attr("d", createBars)
         .attr("transform", "translate(" + options.size / 2 + "," + options.size / 2 + ")")
 
-    bars.selectAll("text")
-        .data(barsLabels)
-        .enter()
-        .append("text")
-        .text(function (d, i) { return d; })
+    // var labelsGroup = svg.append("g")
+    //     .attr("id", "labels-group" )
+    //     .attr("transform", "translate(" + options.size / 2 + "," + options.size / 2 + ")")
+    //     .append("rect")
+    //     .attr("width", 50)
+    //     .attr("height", 50)
+    //     .attr("fill", "red")
 
-    var labelsGroup = svg.append("g")
-        .attr("id", "labels-group" );
+    // // function that will create another arc to append text elements to it;
+    // var labelsArc = d3.arc()
+    //     .innerRadius(innerRadius * options.levels)
+    //     .outerRadius(innerRadius * options.levels - innerRadius)
+    //     .startAngle(function (d, i) { console.log("fired"); return (i * 2 * Math.PI) / numberOfBars; })
+    //     .endAngle(function (d, i) { return ((i + 1) * 2 * Math.PI) / numberOfBars; })
+    // // .padAngle(options.padAngle)
+    // // .padRadius(options.padRadius);
 
-    // function that will create another arc to append text elements to it;
-    var labelsArc = d3.arc()
-        .innerRadius(innerRadius * options.levels)
-        .outerRadius(innerRadius * options.levels - innerRadius)
-        .startAngle(function (d, i) { console.log("fired"); return (i * 2 * Math.PI) / numberOfBars; })
-        .endAngle(function (d, i) { return ((i + 1) * 2 * Math.PI) / numberOfBars; })
-    // .padAngle(options.padAngle)
-    // .padRadius(options.padRadius);
+    // //method, change data to an object; adding startAngle and endAngle to each arch
+    // var labelsPie = d3.pie()
+    //     .value(function (d) {
+    //         var startAngle = function (d, i) { console.log("fired"); return (i * 2 * Math.PI) / numberOfBars };
+    //         var endAngle = function (d, i) { return ((i + 1) * 2 * Math.PI) / numberOfBars };
+    //         return endAngle - startAngle;
+    //     })
+    //     .padAngle(.01)
+    //     .sort(null);
 
-    //method, change data to an object; adding startAngle and endAngle to each arch
-    var labelsPie = d3.pie()
-        .value(function (d) {
-            var startAngle = function (d, i) { console.log("fired"); return (i * 2 * Math.PI) / numberOfBars };
-            var endAngle = function (d, i) { return ((i + 1) * 2 * Math.PI) / numberOfBars };
-            return endAngle - startAngle;
-        })
-        .padAngle(.01)
-        .sort(null);
+    // // https://www.visualcinnamon.com/2015/09/placing-text-on-arcs.html
+    // //creating another arc => anchor for labels;
+    // var labelsContainers = svg.selectAll(".labels-arc")
+    //     .data(labelsPie(barsHeights))
+    //     .enter()
+    //     .append("path")
+    //     .attr("class", "labels-container")
+    //     .attr("id", function (d, i) { console.log("Labels arc", d); return "label-arc-" + i; })
+    //     // .attr("id", "labels-arc-id")
+    //     .attr("transform", "translate(" + options.size / 2 + "," + options.size / 2 + ")")
+    //     .attr("fill", "black")
+    //     .attr("fill-opacity", 0.4)
+    //     .attr("d", labelsArc);
 
-    // https://www.visualcinnamon.com/2015/09/placing-text-on-arcs.html
-    //creating another arc => anchor for labels;
-    var labelsContainers = svg.selectAll(".labels-arc")
-        .data(labelsPie(barsHeights))
-        .enter()
-        .append("path")
-        .attr("class", "labels-container")
-        .attr("id", function (d, i) { console.log("Labels arc", d); return "label-arc-" + i; })
-        // .attr("id", "labels-arc-id")
-        .attr("transform", "translate(" + options.size / 2 + "," + options.size / 2 + ")")
-        .attr("fill", "black")
-        .attr("fill-opacity", 0.4)
-        .attr("d", labelsArc);
+    // var labels = svg.selectAll(".text-labels")
+    //     .data(labelsPie(barsLabels))
+    //     .enter().append("text")
+    //     .attr("class", "text-labels")
+    //     .append("textPath")       
+    //     // .attr("x", 5)
+    //     // .attr("y", 18)
+    //     .attr("xlink:href", function (d, i) { console.log("XLINK"); return "label-arc-" + i; })
+    //     .attr("fill", "black")
+    //     .attr("transform", "translate(" + options.size/2 + "," + options.size/2 + ")")
+    //     // .attr("xlink:href", "labels-arc-id")
+    //     // .attr("startOffset", function(d, i) {return i * 100 / numBars + 50 / numBars + '%';})
+    //     .text(function (d, i) { console.log(d); return d.data; })
 
-    var labels = svg.selectAll(".text-labels")
-        .data(labelsPie(barsLabels))
-        .enter().append("text")
-        .attr("class", "text-labels")
-        .append("textPath")       
-        // .attr("x", 5)
-        // .attr("y", 18)
-        .attr("xlink:href", function (d, i) { console.log("XLINK"); return "label-arc-" + i; })
-        .attr("fill", "black")
-        .attr("transform", "translate(" + options.size/2 + "," + options.size/2 + ")")
-        // .attr("xlink:href", "labels-arc-id")
-        // .attr("startOffset", function(d, i) {return i * 100 / numBars + 50 / numBars + '%';})
-        .text(function (d, i) { console.log(d); return d.data; })
-
-        .append("use")
-        .attr("xlink:href", function (d, i) { console.log("XLINK"); return "label-arc-" + i; })
-        .style("stroke", "black")
-        .style("fill", "black");
+        // .append("use")
+        // .attr("xlink:href", function (d, i) { console.log("XLINK"); return "label-arc-" + i; })
+        // .style("stroke", "black")
+        // .style("fill", "black");
 
 
     // var labels = labelsPaths.selectAll("textPath")
@@ -189,6 +188,30 @@ function drawPolarChart(options, appData) {
     //     .append("text")
     //     .attr("class", "labels")
     //     .text(function (d, i) { return d; })
+
+    ///////////////// LABELS 2 ///////////////
+
+
+    var labelGroup = svg.append("g")
+        .attr("class", "label-group")
+        .attr("transform", "translate(" + options.size/2 + "," + options.size/2 + ")")
+        
+    
+    var labels = labelGroup.selectAll(".label")
+        .data(barsLabels)
+        .enter().append("g")
+        .attr("class", "label")
+        // .attr("transform", "translate(" + options.size/2 + "," + options.size/2 + ")")
+        .attr("transform", function(d, i) { return "rotate(" + (i * 360 / barsLabels.length) + ")"; });
+
+    labelGroup.selectAll(".label").append("text")
+        // 20 is 
+        .attr("x", 40)
+        //0.25 is an arbitrary value
+        .attr("y", -((options.size/2)-options.size/options.levels*0.25))
+        // .attr("text-anchor", "beginning")
+        .text(function(d) {return d;});
+
 
 
     /// AXIS /////////////////////////////////
@@ -213,8 +236,6 @@ function drawPolarChart(options, appData) {
     var yAxisGroup = svg.append("g")
         .attr("transform", "translate(" + options.size / 2 + "," + ((options.size / 2) - innerRadius) + ")")
         .call(yAxis);
-
-
 
 
 }

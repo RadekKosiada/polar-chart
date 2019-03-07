@@ -2,7 +2,7 @@ body {
     /* background-color: blue; */
 }
 
-.polar-chart {
+.polar-chart, svg {
     border: 1px solid grey;
 }
 
