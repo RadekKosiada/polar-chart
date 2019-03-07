@@ -60,7 +60,7 @@ function drawPolarChart(options, appData) {
 
     function returnsBarsIndex() {
         nameOfBars.forEach(function (elem, i) {
-            console.log(i)
+            // console.log(i)
             return i;
         });
     }
@@ -69,7 +69,7 @@ function drawPolarChart(options, appData) {
     function getBarsHeight() {
         var heightsArr = [];
         for (var key in appData) {
-            console.log("VaLUES:", appData[key])
+            // console.log("VaLUES:", appData[key])
             // I am adding here innerRadius, 
             //as the bars start from it and not 0 (middle of the svg);
             heightsArr.push(appData[key] + innerRadius)
@@ -107,7 +107,7 @@ function drawPolarChart(options, appData) {
         .innerRadius(innerRadius)
         .startAngle(function (d, i) { console.log("fired"); return (i * 2 * Math.PI) / numberOfBars; })
         .endAngle(function (d, i) { return ((i + 1) * 2 * Math.PI) / numberOfBars; })
-        .outerRadius(function (d, i) {console.log('DDDDD',d); return y(d); })
+        .outerRadius(function (d, i) { return y(d); })
         .padAngle(options.padAngle)
         .padRadius(options.padRadius);
 
@@ -128,43 +128,59 @@ function drawPolarChart(options, appData) {
 
     var labelsGroup = svg.append("g");
 
-    //function that will create another arc to append text elements to it;
-    // var labelsArc = d3.arc()
-    //     .innerRadius(innerRadius * options.levels)
-    //     .outerRadius(innerRadius * options.levels - innerRadius)
-    //     .startAngle(0)
-    //     .endAngle(2 * Math.PI);
-
-    // //creating another arc => anchor for labels;
-    // labelsGroup.append("path")
-    //     .attr("class", "arc")
-    //     .attr("transform", "translate(" + options.size / 2 + "," + options.size / 2 + ")")
-    //     .attr("fill", "grey")
-    //     .attr("fill-opacity", 0.4)
-    //     .attr("d", labelsArc);
-
-    labelsGroup.selectAll("text")
-        .data(barsLabels)
-        .enter()
-        .append("text")
-        .attr("class", "labels")
-        .text(function (d, i) { return d; })
-
-    var numbersGroup = svg.append("g")
-        .attr("stroke", "red")
-        .attr("fill", "red")
-        .attr("transform", "translate(100, 100)")
-        // .append("rect")
-        // .attr("width", 100)
-        // .attr("height", 100)
+    // function that will create another arc to append text elements to it;
+    var labelsArc = d3.arc()
+        .innerRadius(innerRadius * options.levels)
+        .outerRadius(innerRadius * options.levels - innerRadius)
+        .startAngle(function (d, i) { console.log("fired"); return (i * 2 * Math.PI) / numberOfBars; })
+        .endAngle(function (d, i) { return ((i + 1) * 2 * Math.PI) / numberOfBars; })
+        .padAngle(options.padAngle)
+        .padRadius(options.padRadius);
     
-    numbersGroup.selectAll("text")
-        .data(options.levels)
+    var labelsPie = d3.pie()
+        .value(function(d) { 
+            var startAngle = function (d, i) { console.log("fired"); return (i * 2 * Math.PI) / numberOfBars};
+            var endAngle = function (d, i) { return ((i + 1) * 2 * Math.PI) / numberOfBars};
+            return endAngle - startAngle; 
+        })
+        .padAngle(.01)
+        .sort(null);
+    
+    // https://www.visualcinnamon.com/2015/09/placing-text-on-arcs.html
+    //creating another arc => anchor for labels;
+    labelsGroup.selectAll(".labels-arc")
+        .data(labelsPie(barsHeights))
         .enter()
-        .attr("class", "numbers")
-        .append("text")
-        .text(function (d, i) { return i; })
+        .append("path")
+        .attr("class", "labels-arc")
+        .attr("id", function(d,i) { return "label-arc-"+i; })
+        .attr("transform", "translate(" + options.size / 2 + "," + options.size / 2 + ")")
+        .attr("fill", "black")
+        .attr("fill-opacity", 0.4)
+        .attr("d", labelsArc);
 
+    labelsGroup.selectAll(".labels")
+        .data(barsLabels)
+        .enter().append("text")
+        .attr("class", "labels")
+        .append("textPath")
+        .attr("fill", "black")
+        // .attr("x", 5)
+        // .attr("y", 18)
+        .attr("xlink:href", function(d, i) { return "label-arc-" + i; })
+        // .attr("startOffset", function(d, i) {return i * 100 / numBars + 50 / numBars + '%';})
+        .text(function(d) { console.log(d); return d; })
+
+
+    // var labels = labelsPaths.selectAll("textPath")
+    //     .data(barsLabels)
+    //     .enter()
+    //     .append("textPath")
+    //     .append("text")
+    //     .attr("class", "labels")
+    //     .text(function (d, i) { return d; })
+
+       
     /// AXIS /////////////////////////////////
 
     //finding the highest bar hight for the scale; 
@@ -188,6 +204,7 @@ function drawPolarChart(options, appData) {
         .attr("transform", "translate(" + options.size / 2 + "," + ((options.size / 2) - innerRadius) + ")")
         .call(yAxis);
     
+  
 
 
 }
