@@ -41,12 +41,17 @@ body {
     font-family: 'Courgette', sans-serif;
 }
 
-text {
+.y-axis text {
     color: black;
     fill: black;
-    stroke: black;
-    position: absolute;
-  left: 100px;
-  top: 150px;
-    z-index: 100;
+    stroke: none;
+    font-family: 'Muli', sans-serif;
+    display: inline;
+}
+
+
+.label-rotate{
+    font-family: 'Muli', sans-serif;
+    stroke: darkgrey;
+    fill: darkgrey;
 }
