@@ -19,28 +19,6 @@ body {
     text-align: center;
 }
 
-.monthArc {
-    fill: white;
-    stroke: #AAAAAA;
-}
-
-.monthText {
-    fill: #6B6B6B;
-    font-size: 13px;
-    font-family: 'Courgette', sans-serif;
-}
-
-.labels-arc {
-    fill: grey;
-    stroke: #AAAAAA;
-}
-
-.labels {
-    fill: #6B6B6B;
-    font-size: 13px;
-    font-family: 'Courgette', sans-serif;
-}
-
 .y-axis text {
     color: black;
     fill: black;
@@ -50,8 +28,8 @@ body {
 }
 
 
-.label-rotate{
+.text-labels{
     font-family: 'Muli', sans-serif;
-    stroke: darkgrey;
-    fill: darkgrey;
+    stroke: none;
+    fill: black;
 }

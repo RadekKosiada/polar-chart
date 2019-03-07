@@ -120,22 +120,12 @@ function drawPolarChart(options, appData) {
         .attr("d", createBars)
         .attr("transform", "translate(" + options.size / 2 + "," + options.size / 2 + ")")
 
-    var labelsGroup = svg.append("g")
-        .attr("id", "labels-group" )
-        .attr("transform", "translate(" + options.size / 2 + "," + options.size / 2 + ")")
-        .append("rect")
-        .attr("width", 50)
-        .attr("height", 50)
-        .attr("fill", "red")
-
     // function that will create another arc to append text elements to it;
     var labelsArc = d3.arc()
         .innerRadius(innerRadius * options.levels)
         .outerRadius(innerRadius * options.levels - innerRadius)
         .startAngle(function (d, i) { console.log("fired"); return (i * 2 * Math.PI) / numberOfBars; })
         .endAngle(function (d, i) { return ((i + 1) * 2 * Math.PI) / numberOfBars; })
-    // .padAngle(options.padAngle)
-    // .padRadius(options.padRadius);
 
     //method, change data to an object; adding startAngle and endAngle to each arch
     var labelsPie = d3.pie()
@@ -162,26 +152,18 @@ function drawPolarChart(options, appData) {
         .attr("d", labelsArc);
 
     var labels = svg.selectAll(".text-labels")
-        .data(labelsPie(barsLabels))
+        .data(barsLabels)
         .enter().append("text")
-        .attr("class", "text-labels")
-        .append("textPath")       
-        // .attr("x", 5)
-        // .attr("y", 18)
-        .attr("xlink:href", function (d, i) { console.log("XLINK"); return "label-arc-" + i; })
+        .attr("class", "text-labels")             
+        .attr("x", 5)
+        .attr("dy", 18)
+        .append("textPath")  
+        .attr("xlink:href", function (d, i) { console.log("XLINK"); return "#label-arc-" + i; })
         .attr("fill", "black")
-        // .attr("transform", "translate(" + options.size/2 + "," + options.size/2 + ")")
-        // .attr("xlink:href", "labels-arc-id")
-        // .attr("startOffset", function(d, i) {return i * 100 / numBars + 50 / numBars + '%';})
-        .text(function (d, i) { console.log(d); return d.data; })
-
-        .append("use")
-        .attr("xlink:href", function (d, i) { console.log("XLINK"); return "label-arc-" + i; })
-        .style("stroke", "black")
-        .style("fill", "black");
+        .text(function (d, i) { console.log(d); return d; })
 
 
-    ///////////////// LABELS 2 ///////////////
+    ///////////////// LABELS 2.approach ///////////////
 
     // var labelGroup = svg.append("g")
     //     .attr("class", "label-group")
@@ -202,7 +184,6 @@ function drawPolarChart(options, appData) {
     //     .attr("y", -((options.size/2)-options.size/options.levels*0.25))
     //     // .attr("text-anchor", "beginning")
     //     .text(function(d) {return d;});
-
 
 
     /// AXIS /////////////////////////////////
