@@ -11,3 +11,42 @@ body {
     fill: grey;
     stroke: red;
 }
+
+
+/* ///////////////////// */
+
+#app{
+    text-align: center;
+}
+
+.monthArc {
+    fill: white;
+    stroke: #AAAAAA;
+}
+
+.monthText {
+    fill: #6B6B6B;
+    font-size: 13px;
+    font-family: 'Courgette', sans-serif;
+}
+
+.labels-arc {
+    fill: grey;
+    stroke: #AAAAAA;
+}
+
+.labels {
+    fill: #6B6B6B;
+    font-size: 13px;
+    font-family: 'Courgette', sans-serif;
+}
+
+text {
+    color: black;
+    fill: black;
+    stroke: black;
+    position: absolute;
+  left: 100px;
+  top: 150px;
+    z-index: 100;
+}
