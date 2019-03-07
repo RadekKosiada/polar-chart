@@ -154,12 +154,15 @@ function drawPolarChart(options, appData) {
     var labels = svg.selectAll(".text-labels")
         .data(barsLabels)
         .enter().append("text")
-        .attr("class", "text-labels")             
-        .attr("x", 5)
-        .attr("dy", 18)
-        .append("textPath")  
+        .attr("class", "text-labels")  
+        //needs to be centered: endAngle - startAngle/2 * half of the string in pixels          
+        .attr("x", 80)
+        .attr("dy", 25)
+        .append("textPath") 
+        //! 
         .attr("xlink:href", function (d, i) { console.log("XLINK"); return "#label-arc-" + i; })
         .attr("fill", "black")
+        .attr("text-anchor", "beginning")
         .text(function (d, i) { console.log(d); return d; })
 
 
