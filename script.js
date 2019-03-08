@@ -171,6 +171,17 @@ function drawPolarChart(options, appData) {
     //https://github.com/d3/d3-axis
     // .ticks()
 
+    var axisScaleReverse = d3.scaleLinear()
+    //heights of the bars
+    .domain([0, theHighestBar])
+    //size of svg
+    .range([0, options.size / 2]);
+
+    var yAxisReverse = d3.axisLeft()
+        .scale(axisScaleReverse)
+    //https://github.com/d3/d3-axis
+    // .ticks()
+
     console.log(innerRadius)
     var yAxisGroup = svg.append("g")
         .attr("class", "y-axis")
@@ -178,6 +189,15 @@ function drawPolarChart(options, appData) {
         .attr("transform", "translate(" + (options.size / 2 + options.margin )+ "," + (options.size / 2 + options.margin) + ")")
         .attr("transform", "translate(" + (options.size / 2 + options.margin ) + "," + (options.size / 2 + options.margin - innerRadius) + ")")
         .call(yAxis);
+
+    var yAxisGroupReverse = svg.append("g")
+    .attr("class", "y-axis")
+    //substracting innerRadius from y attribute to move axis upwards;
+    .attr("transform", "translate(" + (options.size / 2 + options.margin )+ "," + (options.size / 2 + options.margin) + ")")
+    .attr("transform", "translate(" + (options.size / 2 + options.margin ) + "," + (options.size / 2 + options.margin + innerRadius) + ")")
+    .call(yAxisReverse);
+
+    
 }
 
 //defining margin of svg;
