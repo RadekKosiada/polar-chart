@@ -6,7 +6,7 @@ var app = new Vue({
             'Industrial 80': 80,
             // console.log(app["Core AI"])
             'Core AI 89': 89,
-            'VCs 100': 100,
+            'VCs 100': 120,
             'CVCs 58': 58,
             'Acc/includ 45': 45,
             'Meetups 12': 12,
@@ -108,7 +108,7 @@ console.log(innerRadius, options.margin)
         .innerRadius(innerRadius)
         .startAngle(function (d, i) { return (i * 2 * Math.PI) / numberOfBars; })
         .endAngle(function (d, i) { return ((i + 1) * 2 * Math.PI) / numberOfBars; })
-        .outerRadius(function (d, i) { console.log(d); return chartScale(d+10); })
+        .outerRadius(function (d, i) { console.log(d); return chartScale(d+(theHighestBar/10)); })
         .padAngle(options.padAngle)
         .padRadius(options.padRadius);
 
