@@ -6,7 +6,7 @@ var app = new Vue({
             'Industrial 80': 80,
             // console.log(app["Core AI"])
             'Core AI 25': 25,
-            'VCs 100': 91.3,
+            'VCs 100': 102.2,
             'CVCs 58': 58,
             'Acc/includ 45': 45,
             'Meetups 12': 12,
@@ -49,17 +49,6 @@ function drawPolarChart(options, appData) {
         });
     }
     returnsBarsIndex();
-
-    // function getBarsHeight() {
-    //     var heightsArr = [];
-    //     for (var key in appData) {
-    //         // console.log("VaLUES:", appData[key])
-    //         // I am adding here innerRadius, 
-    //         //as the bars start from it and not 0 (middle of the svg);
-    //         heightsArr.push(appData[key])
-    //     }
-    //     return heightsArr;
-    // }
 
     var barsHeights = getBarsHeight(appData);
     console.log(barsHeights);
@@ -152,7 +141,7 @@ console.log(innerRadius, options.margin)
         .enter().append("text")
         .attr("class", "text-labels")  
         //needs to be centered: endAngle - startAngle/2 * half of the string in pixels          
-        .attr("x", 40)
+        // .attr("x", 40)
         .attr("dy", 25)
         .append("textPath") 
         //! 
@@ -161,6 +150,14 @@ console.log(innerRadius, options.margin)
         .attr("text-anchor", "beginning")
         .text(function (d, i) { return d; })
 
+        //defining an array of all labels
+        var labelsArray = labels._groups[0];
+      
+        labelsArray.forEach(function(elem) {
+            console.log((elem.getComputedTextLength()));
+            elem.setAttribute("x", (Math.PI*2/barsLabels.length/2 + elem.getComputedTextLength()/2))
+    
+        })
     /// AXIS /////////////////////////////////
 
     // https://www.dashingd3js.com/d3js-axes
@@ -233,7 +230,7 @@ var polarChartOptions = {
     strokeColor: "grey",
     //how many x-circles there will be
     //the number of levels will adjust to the height highest Bar
-    levels: theHighestBar/10,
+    levels: Math.round(theHighestBar/10),
     dashesWidth: 2,
     dashesLength: 2,
     padAngle: 0.2, //specifies padding in radians (the angle of the padding) of the bars;
