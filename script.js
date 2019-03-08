@@ -5,8 +5,8 @@ var app = new Vue({
         chartData: {
             'Industrial 80': 80,
             // console.log(app["Core AI"])
-            'Core AI 89': 89,
-            'VCs 100': 220,
+            'Core AI 25': 25,
+            'VCs 100': 91.3,
             'CVCs 58': 58,
             'Acc/includ 45': 45,
             'Meetups 12': 12,
@@ -50,18 +50,18 @@ function drawPolarChart(options, appData) {
     }
     returnsBarsIndex();
 
-    function getBarsHeight() {
-        var heightsArr = [];
-        for (var key in appData) {
-            // console.log("VaLUES:", appData[key])
-            // I am adding here innerRadius, 
-            //as the bars start from it and not 0 (middle of the svg);
-            heightsArr.push(appData[key])
-        }
-        return heightsArr;
-    }
+    // function getBarsHeight() {
+    //     var heightsArr = [];
+    //     for (var key in appData) {
+    //         // console.log("VaLUES:", appData[key])
+    //         // I am adding here innerRadius, 
+    //         //as the bars start from it and not 0 (middle of the svg);
+    //         heightsArr.push(appData[key])
+    //     }
+    //     return heightsArr;
+    // }
 
-    var barsHeights = getBarsHeight();
+    var barsHeights = getBarsHeight(appData);
     console.log(barsHeights);
 
     function getBarsLabels() {
@@ -210,6 +210,21 @@ var margin = 70;
 // for easy access, if need to change;
 // will be passed to function that draws the chart together with data;
 
+
+function getBarsHeight(data) {
+    var heightsArr = [];
+    for (var key in data) {
+        // console.log("VaLUES:", appData[key])
+        // I am adding here innerRadius, 
+        //as the bars start from it and not 0 (middle of the svg);
+        heightsArr.push(data[key])
+    }
+    return heightsArr;
+}
+
+var barsHeights = getBarsHeight(app._data.chartData);
+var theHighestBar = Math.max(...barsHeights);
+
 var polarChartOptions = {
     margin: margin,
     // size will work for both width and height;
@@ -217,8 +232,8 @@ var polarChartOptions = {
     size: 600 + margin,
     strokeColor: "grey",
     //how many x-circles there will be
-    //the number should be fixed, no matter how high the bars
-    levels: 15,
+    //the number of levels will adjust to the height highest Bar
+    levels: theHighestBar/10,
     dashesWidth: 2,
     dashesLength: 2,
     padAngle: 0.2, //specifies padding in radians (the angle of the padding) of the bars;

@@ -8,6 +8,7 @@ size dopasowac - margins? left, right, bottom, top? zeby labels sie zmiescily te
 #TODO
 kolory 
 x startAngle of each arc, but divided by 2; for labels
+(number of) ticks to be fixed
 fix the circles
 styling of scale
 dopasowanie wielkosci do ekranu?
