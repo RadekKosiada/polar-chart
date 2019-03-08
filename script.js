@@ -3,7 +3,7 @@ var app = new Vue({
     data: {
         numberOfInputs: 1,
         chartData: {
-            'Industrial': 80,
+            'Industrial 80': 80,
             // console.log(app["Core AI"])
             'Core AI': 25,
             'VCs': 100,
@@ -72,7 +72,7 @@ function drawPolarChart(options, appData) {
             // console.log("VaLUES:", appData[key])
             // I am adding here innerRadius, 
             //as the bars start from it and not 0 (middle of the svg);
-            heightsArr.push(appData[key] + innerRadius)
+            heightsArr.push(appData[key])
         }
         return heightsArr;
     }
@@ -90,24 +90,23 @@ function drawPolarChart(options, appData) {
     }
 
     var barsLabels = getBarsLabels();
-    console.log(barsLabels);
+    // console.log(barsLabels);
 
+    //finding the highest bar hight for the scale; 
+    var theHighestBar = Math.max(...barsHeights);
+    console.log(theHighestBar)
 
-    var chartScale = d3.scaleLinear()
-        //heights of the bars
+    var chartScale  = d3.scaleRadial()
         .domain([0, theHighestBar])
-        //size of svg divided by two as we want radius;
         .range([0, options.size / 2]);
-
-    var y = d3.scaleRadial()
-        .range([innerRadius, outerRadius]);
+  
 
     //https://d3indepth.com/shapes/
     var createBars = d3.arc()
         .innerRadius(innerRadius)
-        .startAngle(function (d, i) { console.log("fired"); return (i * 2 * Math.PI) / numberOfBars; })
+        .startAngle(function (d, i) { return (i * 2 * Math.PI) / numberOfBars; })
         .endAngle(function (d, i) { return ((i + 1) * 2 * Math.PI) / numberOfBars; })
-        .outerRadius(function (d, i) { return y(d); })
+        .outerRadius(function (d, i) { return chartScale(d); })
         .padAngle(options.padAngle)
         .padRadius(options.padRadius);
 
@@ -123,28 +122,18 @@ function drawPolarChart(options, appData) {
     // function that will create another arc to append text elements to it;
     var labelsArc = d3.arc()
         .innerRadius(innerRadius * options.levels)
-        .outerRadius(innerRadius * options.levels - innerRadius)
-        .startAngle(function (d, i) { console.log("fired"); return (i * 2 * Math.PI) / numberOfBars; })
+        .outerRadius(innerRadius * options.levels)
+        .startAngle(function (d, i) { return (i * 2 * Math.PI) / numberOfBars; })
         .endAngle(function (d, i) { return ((i + 1) * 2 * Math.PI) / numberOfBars; })
-
-    //method, change data to an object; adding startAngle and endAngle to each arch
-    var labelsPie = d3.pie()
-        .value(function (d) {
-            var startAngle = function (d, i) { console.log("fired"); return (i * 2 * Math.PI) / numberOfBars };
-            var endAngle = function (d, i) { return ((i + 1) * 2 * Math.PI) / numberOfBars };
-            return endAngle - startAngle;
-        })
-        .padAngle(.01)
-        .sort(null);
 
     // https://www.visualcinnamon.com/2015/09/placing-text-on-arcs.html
     //creating another arc => anchor for labels;
     var labelsContainers = svg.selectAll(".labels-arc")
-        .data(labelsPie(barsHeights))
+        .data(barsHeights)
         .enter()
         .append("path")
         .attr("class", "labels-container")
-        .attr("id", function (d, i) { console.log("Labels arc", d); return "label-arc-" + i; })
+        .attr("id", function (d, i) { return "label-arc-" + i; })
         // .attr("id", "labels-arc-id")
         .attr("transform", "translate(" + options.size / 2 + "," + options.size / 2 + ")")
         .attr("fill", "black")
@@ -156,14 +145,14 @@ function drawPolarChart(options, appData) {
         .enter().append("text")
         .attr("class", "text-labels")  
         //needs to be centered: endAngle - startAngle/2 * half of the string in pixels          
-        .attr("x", 80)
+        .attr("x", 40)
         .attr("dy", 25)
         .append("textPath") 
         //! 
-        .attr("xlink:href", function (d, i) { console.log("XLINK"); return "#label-arc-" + i; })
+        .attr("xlink:href", function (d, i) { return "#label-arc-" + i; })
         .attr("fill", "black")
         .attr("text-anchor", "beginning")
-        .text(function (d, i) { console.log(d); return d; })
+        .text(function (d, i) { return d; })
 
 
     ///////////////// LABELS 2.approach ///////////////
@@ -172,7 +161,6 @@ function drawPolarChart(options, appData) {
     //     .attr("class", "label-group")
     //     .attr("transform", "translate(" + options.size/2 + "," + options.size/2 + ")")
         
-    
     // var labels = labelGroup.selectAll(".label-rotate")
     //     .data(barsLabels)
     //     .enter().append("g")
@@ -191,11 +179,6 @@ function drawPolarChart(options, appData) {
 
     /// AXIS /////////////////////////////////
 
-    //finding the highest bar hight for the scale; 
-    //innerRadius needs to be substracted as we add it in 'getBarsHeight()'
-    var theHighestBar = Math.max(...barsHeights) - innerRadius;
-    console.log(theHighestBar)
-
     // https://www.dashingd3js.com/d3js-axes
     var axisScale = d3.scaleLinear()
         //heights of the bars
@@ -208,8 +191,10 @@ function drawPolarChart(options, appData) {
     //https://github.com/d3/d3-axis
     // .ticks()
 
+    console.log(innerRadius)
     var yAxisGroup = svg.append("g")
         .attr("class", "y-axis")
+        //substracting innerRadius from y attribute to move axis upwards;
         .attr("transform", "translate(" + options.size / 2 + "," + ((options.size / 2) - innerRadius) + ")")
         .call(yAxis);
 
@@ -224,7 +209,7 @@ function drawPolarChart(options, appData) {
 
 var polarChartOptions = {
     // size will work for both width and height;
-    size: 800,
+    size: 600,
     strokeColor: "grey",
     //how many x-circles there will be
     //the number should be fixed, no matter how high the bars
