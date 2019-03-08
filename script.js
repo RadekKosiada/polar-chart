@@ -5,11 +5,11 @@ var app = new Vue({
         chartData: {
             'Industrial 80': 80,
             // console.log(app["Core AI"])
-            'Core AI 25': 25,
-            'VCs 100': 100,
+            'Core AI 89': 89,
+            'VCs 220': 220,
             'CVCs 58': 58,
             'Acc/includ 45': 45,
-            'Meetups 12': 12,
+            'Meetups 12': 22,
             'Corp. RCs 62': 62,
             'Non-corp. RCs 80': 80,
             'Top unis 60': 60,
@@ -98,17 +98,17 @@ function drawPolarChart(options, appData) {
     var theHighestBar = Math.max(...barsHeights);
     console.log(theHighestBar)
 
-    var chartScale  = d3.scaleRadial()
+    var chartScale  = d3.scaleLinear()
         .domain([0, theHighestBar])
         .range([0, options.size / 2]);
   
-
+console.log(innerRadius, options.margin)
     //https://d3indepth.com/shapes/
     var createBars = d3.arc()
         .innerRadius(innerRadius)
         .startAngle(function (d, i) { return (i * 2 * Math.PI) / numberOfBars; })
         .endAngle(function (d, i) { return ((i + 1) * 2 * Math.PI) / numberOfBars; })
-        .outerRadius(function (d, i) { return chartScale(d); })
+        .outerRadius(function (d, i) { console.log(d); return chartScale(d+10); })
         .padAngle(options.padAngle)
         .padRadius(options.padRadius);
 
@@ -201,7 +201,7 @@ function drawPolarChart(options, appData) {
 }
 
 //defining margin of svg;
-var margin = 600 * 10/100;
+var margin = 40;
 // storing all the options of the chart in an object;
 // for easy access, if need to change;
 // will be passed to function that draws the chart together with data;
