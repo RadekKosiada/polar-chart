@@ -2,12 +2,13 @@
 explain what's different between m and ex
 
 #DONE
-x startAngle of each arc, but divided by 2;
 yScale dla wykresu/dla bars!! 
+size dopasowac - margins? left, right, bottom, top? zeby labels sie zmiescily tez
 
 #TODO
 kolory 
-size dopasowac - margins? left, right, bottom, top? zeby labels sie zmiescily tez
+x startAngle of each arc, but divided by 2; for labels
+fix the circles
 styling of scale
 dopasowanie wielkosci do ekranu?
 hover effect- show labels, when you hover

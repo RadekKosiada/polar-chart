@@ -6,7 +6,7 @@ var app = new Vue({
             'Industrial 80': 80,
             // console.log(app["Core AI"])
             'Core AI 89': 89,
-            'VCs 100': 120,
+            'VCs 100': 220,
             'CVCs 58': 58,
             'Acc/includ 45': 45,
             'Meetups 12': 12,
@@ -33,24 +33,6 @@ function drawPolarChart(options, appData) {
         .attr("width", options.size + options.margin * 2)
         // for top&bottom;
         .attr("height", options.size + options.margin * 2)
-
-    //drawing circles on svg
-    svg.selectAll(".levels")
-        //appending data to circles
-        .data(d3.range(0, options.levels + 2))
-        .enter()
-        .append("circle")
-        .attr("class", "x-circle")
-        .attr("r", function (d, i) {
-            return (options.size / 2) / options.levels * d;
-        })
-        //adding margin*1 to center the circles;
-        .attr("cx", options.size / 2 + options.margin)
-        .attr("cy", options.size / 2 + options.margin)
-        .attr("stroke", options.strokeColor)
-        .attr("stroke-dasharray", options.dashesLength)
-        .attr("stroke-width", options.dashesWidth)
-        .attr("fill", "none");
 
     var numberOfBars = Object.keys(appData).length;
     // array with names of all dimensions
@@ -98,6 +80,8 @@ function drawPolarChart(options, appData) {
     var theHighestBar = Math.max(...barsHeights);
     console.log(theHighestBar)
 
+    ////// CHARTSCALE &  BARS /////////////////////////
+
     var chartScale  = d3.scaleLinear()
         .domain([0, theHighestBar])
         .range([0, options.size / 2]);
@@ -108,7 +92,7 @@ console.log(innerRadius, options.margin)
         .innerRadius(innerRadius)
         .startAngle(function (d, i) { return (i * 2 * Math.PI) / numberOfBars; })
         .endAngle(function (d, i) { return ((i + 1) * 2 * Math.PI) / numberOfBars; })
-        .outerRadius(function (d, i) { console.log(d); return chartScale(d+(theHighestBar/10)); })
+        .outerRadius(function (d, i) { console.log(d); return chartScale(d+(theHighestBar/options.levels)); })
         .padAngle(options.padAngle)
         .padRadius(options.padRadius);
 
@@ -121,6 +105,27 @@ console.log(innerRadius, options.margin)
         .attr("d", createBars)
         //adding margin*1 to x & y attributes to center the bars;
         .attr("transform", "translate(" + (options.size / 2 + options.margin )+ "," + (options.size / 2 + options.margin) + ")")
+
+    ////// CIRCLES ///////////////////////
+    svg.selectAll(".levels")
+        //appending data to circles
+        .data(d3.range(0, options.levels + 2))
+        .enter()
+        .append("circle")
+        .attr("class", "x-circle")
+        .attr("r", function (d, i) {
+            return (options.size / 2) / options.levels * d;
+        })
+        //adding margin*1 to center the circles;
+        .attr("cx", options.size / 2 + options.margin)
+        .attr("cy", options.size / 2 + options.margin)
+        .attr("stroke", options.strokeColor)
+        .attr("stroke-dasharray", options.dashesLength)
+        .attr("stroke-width", options.dashesWidth)
+        .attr("fill", "none");
+
+
+    ///////// LABELS //////////////////////////////////////////////
 
     // function that will create another arc to append text elements to it;
     var labelsArc = d3.arc()
@@ -213,7 +218,7 @@ var polarChartOptions = {
     strokeColor: "grey",
     //how many x-circles there will be
     //the number should be fixed, no matter how high the bars
-    levels: 10,
+    levels: 15,
     dashesWidth: 2,
     dashesLength: 2,
     padAngle: 0.2, //specifies padding in radians (the angle of the padding) of the bars;
