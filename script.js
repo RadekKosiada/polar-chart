@@ -5,16 +5,16 @@ var app = new Vue({
         chartData: {
             'Industrial 80': 80,
             // console.log(app["Core AI"])
-            'Core AI': 25,
-            'VCs': 100,
-            'CVCs': 58,
-            'Acc/includ': 45,
-            'Meetups': 12,
-            'Corp. RCs': 62,
-            'Non-corp. RCs': 80,
-            'Top unis': 60,
-            'Students': 89,
-            'AI publications': 41
+            'Core AI 25': 25,
+            'VCs 100': 100,
+            'CVCs 58': 58,
+            'Acc/includ 45': 45,
+            'Meetups 12': 12,
+            'Corp. RCs 62': 62,
+            'Non-corp. RCs 80': 80,
+            'Top unis 60': 60,
+            'Students 89': 89,
+            'AI publications 41': 41
         }
     }
 })
@@ -29,22 +29,24 @@ function drawPolarChart(options, appData) {
     var svg = d3.select("#app")
         .append("svg")
         .attr("class", "polar-chart")
-        .attr("width", options.size)
-        .attr("height", options.size)
+        //adding margins*2 for left&right;
+        .attr("width", options.size + options.margin * 2)
+        // for top&bottom;
+        .attr("height", options.size + options.margin * 2)
 
     //drawing circles on svg
     svg.selectAll(".levels")
         //appending data to circles
-        .data(d3.range(1, options.levels + 1))
+        .data(d3.range(0, options.levels + 2))
         .enter()
         .append("circle")
         .attr("class", "x-circle")
         .attr("r", function (d, i) {
-            // console.log(i)
             return (options.size / 2) / options.levels * d;
         })
-        .attr("cx", options.size / 2)
-        .attr("cy", options.size / 2)
+        //adding margin*1 to center the circles;
+        .attr("cx", options.size / 2 + options.margin)
+        .attr("cy", options.size / 2 + options.margin)
         .attr("stroke", options.strokeColor)
         .attr("stroke-dasharray", options.dashesLength)
         .attr("stroke-width", options.dashesWidth)
@@ -117,7 +119,8 @@ function drawPolarChart(options, appData) {
         .attr("fill", "grey")
         .attr("fill-opacity", "0.85")
         .attr("d", createBars)
-        .attr("transform", "translate(" + options.size / 2 + "," + options.size / 2 + ")")
+        //adding margin*1 to x & y attributes to center the bars;
+        .attr("transform", "translate(" + (options.size / 2 + options.margin )+ "," + (options.size / 2 + options.margin) + ")")
 
     // function that will create another arc to append text elements to it;
     var labelsArc = d3.arc()
@@ -135,7 +138,7 @@ function drawPolarChart(options, appData) {
         .attr("class", "labels-container")
         .attr("id", function (d, i) { return "label-arc-" + i; })
         // .attr("id", "labels-arc-id")
-        .attr("transform", "translate(" + options.size / 2 + "," + options.size / 2 + ")")
+        .attr("transform", "translate(" + (options.size / 2 + options.margin )+ "," + (options.size / 2 + options.margin) + ")")
         .attr("fill", "black")
         .attr("fill-opacity", 0.4)
         .attr("d", labelsArc);
@@ -153,29 +156,6 @@ function drawPolarChart(options, appData) {
         .attr("fill", "black")
         .attr("text-anchor", "beginning")
         .text(function (d, i) { return d; })
-
-
-    ///////////////// LABELS 2.approach ///////////////
-
-    // var labelGroup = svg.append("g")
-    //     .attr("class", "label-group")
-    //     .attr("transform", "translate(" + options.size/2 + "," + options.size/2 + ")")
-        
-    // var labels = labelGroup.selectAll(".label-rotate")
-    //     .data(barsLabels)
-    //     .enter().append("g")
-    //     .attr("class", "label-rotate")
-    //     // .attr("transform", "translate(" + options.size/2 + "," + options.size/2 + ")")
-    //     .attr("transform", function(d, i) { return "rotate(" + (i * 360 / barsLabels.length) + ")"; });
-
-    // labelGroup.selectAll(".label-rotate").append("text")
-    //     // 20 is 
-    //     .attr("x", 40)
-    //     //0.25 is an arbitrary value
-    //     .attr("y", -((options.size/2)-options.size/options.levels*0.25))
-    //     // .attr("text-anchor", "beginning")
-    //     .text(function(d) {return d;});
-
 
     /// AXIS /////////////////////////////////
 
@@ -195,21 +175,22 @@ function drawPolarChart(options, appData) {
     var yAxisGroup = svg.append("g")
         .attr("class", "y-axis")
         //substracting innerRadius from y attribute to move axis upwards;
-        .attr("transform", "translate(" + options.size / 2 + "," + ((options.size / 2) - innerRadius) + ")")
+        .attr("transform", "translate(" + (options.size / 2 + options.margin )+ "," + (options.size / 2 + options.margin) + ")")
+        .attr("transform", "translate(" + (options.size / 2 + options.margin ) + "," + (options.size / 2 + options.margin - innerRadius) + ")")
         .call(yAxis);
-
-
 }
 
-
+//defining margin of svg;
+var margin = 600 * 10/100;
 // storing all the options of the chart in an object;
 // for easy access, if need to change;
-// will pass it later to function that draws the chart together with data;
-//also changing the data structure won't require additional work;
+// will be passed to function that draws the chart together with data;
 
 var polarChartOptions = {
+    margin: margin,
     // size will work for both width and height;
-    size: 600,
+    //adding margin to the size;
+    size: 600 + margin,
     strokeColor: "grey",
     //how many x-circles there will be
     //the number should be fixed, no matter how high the bars
