@@ -6,10 +6,10 @@ var app = new Vue({
             'Industrial 80': 80,
             // console.log(app["Core AI"])
             'Core AI 89': 89,
-            'VCs 220': 220,
+            'VCs 100': 100,
             'CVCs 58': 58,
             'Acc/includ 45': 45,
-            'Meetups 12': 22,
+            'Meetups 12': 12,
             'Corp. RCs 62': 62,
             'Non-corp. RCs 80': 80,
             'Top unis 60': 60,
@@ -124,8 +124,8 @@ console.log(innerRadius, options.margin)
 
     // function that will create another arc to append text elements to it;
     var labelsArc = d3.arc()
-        .innerRadius(innerRadius * options.levels)
-        .outerRadius(innerRadius * options.levels)
+        .innerRadius(innerRadius * (options.levels+2))
+        .outerRadius(innerRadius * (options.levels+1))
         .startAngle(function (d, i) { return (i * 2 * Math.PI) / numberOfBars; })
         .endAngle(function (d, i) { return ((i + 1) * 2 * Math.PI) / numberOfBars; })
 
@@ -139,8 +139,7 @@ console.log(innerRadius, options.margin)
         .attr("id", function (d, i) { return "label-arc-" + i; })
         // .attr("id", "labels-arc-id")
         .attr("transform", "translate(" + (options.size / 2 + options.margin )+ "," + (options.size / 2 + options.margin) + ")")
-        .attr("fill", "black")
-        .attr("fill-opacity", 0.4)
+        .attr("fill", "none")
         .attr("d", labelsArc);
 
     var labels = svg.selectAll(".text-labels")
@@ -201,7 +200,7 @@ console.log(innerRadius, options.margin)
 }
 
 //defining margin of svg;
-var margin = 40;
+var margin = 70;
 // storing all the options of the chart in an object;
 // for easy access, if need to change;
 // will be passed to function that draws the chart together with data;
