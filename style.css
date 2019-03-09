@@ -1,32 +1,10 @@
-body {
-    /* background-color: blue; */
-}
-
 .polar-chart, svg {
     border: 1px solid grey;
 }
 
-.arc {
-    border: solid black 1px;
-    fill: grey;
-    stroke: red;
-}
-
-
-/* ///////////////////// */
-
 #app{
     text-align: center;
 }
-
-.y-axis text {
-    color: black;
-    fill: black;
-    stroke: none;
-    font-family: 'Muli', sans-serif;
-    display: inline;
-}
-
 
 .text-labels{
     font-family: 'Muli', sans-serif;

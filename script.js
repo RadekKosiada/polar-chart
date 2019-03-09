@@ -14,7 +14,7 @@ var app = new Vue({
             'Non-corp. RCs 80': 80,
             'Top unis 60': 60,
             'Students 89': 89,
-            'AI publications 41': 41
+            'AI publications 41': 41,
         }
     }
 })
@@ -112,7 +112,7 @@ function drawPolarChart(options, appData) {
             counter++;
             barsArr[i].setAttribute("fill", options.c.blue);  
             // console.log("2", counter);          
-        } else if(i<11) {
+        } else {
             counter++;
             barsArr[i].setAttribute("fill", options.c.darkblue);
             // console.log("3", counter);
@@ -136,7 +136,7 @@ function drawPolarChart(options, appData) {
         .attr("stroke-dasharray", options.dashesLength)
         .attr("stroke-width", options.dashesWidth)
         .attr("fill", "none")
-        .attr("opacity", "0.2")
+        .attr("opacity", options.circlesOpacity)
 
 
     ///////// LABELS //////////////////////////////////////////////
@@ -279,6 +279,7 @@ var polarChartOptions = {
     padAngle: 0.2, //specifies padding in radians (the angle of the padding) of the bars;
     padRadius: 20, //defines the linear distance between the bars; 
     legendOpacity: 0.8,
+    circlesOpacity: 0.5,
     legendFontSize: 20,
     c: {
         orange: "rgb(255, 96, 17)",
