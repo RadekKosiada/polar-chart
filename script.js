@@ -69,22 +69,6 @@ function drawPolarChart(options, appData) {
     var theHighestBar = Math.max(...barsHeights);
     console.log(theHighestBar)
 
-    //////// COLORS ///////////////////////////////////////////////
-    var numColors = Object.keys(options.c).length;
-    console.log(numColors)
-    barsLabels.forEach(function(elem, i) {
-        colorsArr = [];
-        while(barsLabels.length > 0) {
-            colorsArr.push(barsLabels.splice(0, numColors-1))
-        }
-        
-        return colorsArr;
-    })
-    console.log(colorsArr[0]);
-
-    var colors = d3.scaleOrdinal()
-    .domain([colorsArr[0], colorsArr[1], colorsArr[2], colorsArr[3]])
-    .range([options.c.orange, options.c.green, options.c.blue, options.c.darkblue]);
 
     ////// CHARTSCALE &  BARS /////////////////////////
 
@@ -106,12 +90,40 @@ console.log(innerRadius, options.margin)
         .data(barsHeights)
         .enter()
         .append("path")
-        .attr("fill", function(d, i) { return colors(i) })
-        .attr("fill-opacity", "1")
+        // .attr("fill", "grey")
+        // .attr("fill-opacity", "0.5")
+        .attr("class", "bars")
         .attr("d", createBars)
         //adding margin*1 to x & y attributes to center the bars;
         .attr("transform", "translate(" + (options.size / 2 + options.margin )+ "," + (options.size / 2 + options.margin) + ")")
 
+    //////// COLORS ///////////////////////////////////////////////
+    var numColors = Object.keys(options.c).length;
+    var barsArr = document.getElementsByClassName("bars")
+    console.log(barsArr);
+    var counter = 0;
+    for(var i = 0; i < barsArr.length; i++) {
+        if(i < barsArr.length/numColors) {
+            counter++;
+            barsArr[i].setAttribute("fill", options.c.orange);
+
+            console.log("1", counter);
+        } else if (i < 6) {
+            counter++;
+            barsArr[i].setAttribute("fill", options.c.green);    
+            console.log("2", counter);        
+        } else if(i<9) {
+            counter++;
+            barsArr[i].setAttribute("fill", options.c.blue);  
+            console.log("3", counter);          
+        } else if(i<11) {
+            counter++;
+            barsArr[i].setAttribute("fill", options.c.darkblue);
+            console.log("4", counter);
+        }        
+
+    }
+   
     
     ////// CIRCLES ///////////////////////
     svg.selectAll(".levels")
