@@ -55,7 +55,6 @@ function drawPolarChart(options, appData) {
 
     function getBarsLabels() {
         var labelsArr = [];
-        console.log("KEYS: ", key)
         for (var key in appData) {
             labelsArr.push(key)
         }
@@ -67,8 +66,6 @@ function drawPolarChart(options, appData) {
 
     //finding the highest bar hight for the scale; 
     var theHighestBar = Math.max(...barsHeights);
-    console.log(theHighestBar)
-
 
     ////// CHARTSCALE &  BARS /////////////////////////
 
@@ -76,7 +73,6 @@ function drawPolarChart(options, appData) {
         .domain([0, theHighestBar])
         .range([0, options.size / 2]);
   
-console.log(innerRadius, options.margin)
     //https://d3indepth.com/shapes/
     var createBars = d3.arc()
         .innerRadius(innerRadius)
@@ -100,31 +96,29 @@ console.log(innerRadius, options.margin)
     //////// COLORS ///////////////////////////////////////////////
     var numColors = Object.keys(options.c).length;
     var barsArr = document.getElementsByClassName("bars")
-    console.log(barsArr);
+   
     var counter = 0;
+    var num = barsArr.length/numColors
     for(var i = 0; i < barsArr.length; i++) {
         if(i < barsArr.length/numColors) {
             counter++;
             barsArr[i].setAttribute("fill", options.c.orange);
-
-            console.log("1", counter);
+            // console.log("0", counter);
         } else if (i < 6) {
             counter++;
             barsArr[i].setAttribute("fill", options.c.green);    
-            console.log("2", counter);        
+            // console.log("1", counter);        
         } else if(i<9) {
             counter++;
             barsArr[i].setAttribute("fill", options.c.blue);  
-            console.log("3", counter);          
+            // console.log("2", counter);          
         } else if(i<11) {
             counter++;
             barsArr[i].setAttribute("fill", options.c.darkblue);
-            console.log("4", counter);
+            // console.log("3", counter);
         }        
-
     }
    
-    
     ////// CIRCLES ///////////////////////
     svg.selectAll(".levels")
         //appending data to circles
@@ -200,34 +194,63 @@ console.log(innerRadius, options.margin)
     var yAxis = d3.axisLeft()
         .scale(axisScale)
     //https://github.com/d3/d3-axis
-    // .ticks()
-
-    var axisScaleReverse = d3.scaleLinear()
-    //heights of the bars
-    .domain([0, theHighestBar])
-    //size of svg
-    .range([0, options.size / 2]);
 
     var yAxisReverse = d3.axisLeft()
-        .scale(axisScaleReverse)
+    //using chartScale defined before for bars;
+        .scale(chartScale)
     //https://github.com/d3/d3-axis
     // .ticks()
 
     var yAxisGroup = svg.append("g")
-        .attr("class", "y-axis")
-        //substracting innerRadius from y attribute to move axis upwards;
+        .attr("class", "y-axis-container")
         .attr("transform", "translate(" + (options.size / 2 + options.margin )+ "," + (options.size / 2 + options.margin) + ")")
+        //substracting innerRadius from y attribute to move axis upwards;
         .attr("transform", "translate(" + (options.size / 2 + options.margin ) + "," + (options.size / 2 + options.margin - innerRadius) + ")")
         .call(yAxis);
 
     var yAxisGroupReverse = svg.append("g")
-    .attr("class", "y-axis")
-    //substracting innerRadius from y attribute to move axis upwards;
+    .attr("class", "y-axis-container")   
     .attr("transform", "translate(" + (options.size / 2 + options.margin )+ "," + (options.size / 2 + options.margin) + ")")
+     //adding innerRadius from y attribute to move axis downwards;
     .attr("transform", "translate(" + (options.size / 2 + options.margin ) + "," + (options.size / 2 + options.margin + innerRadius) + ")")
     .call(yAxisReverse);
 
+    //STYLING AXIS 
+    var axisNodes = document.getElementsByClassName("domain")
+    for(var i = 0; i < axisNodes.length; i++) {
+        axisNodes[i].setAttribute("stroke", "none")
+    }
+
+    //STYLING AXIS TICKS
+    var axisTicks = document.querySelectorAll("line")
+    for(var i =0; i < axisTicks.length; i++) {
+        axisTicks[i].setAttribute("display", "none")
+    }
+
+    // var whatever = document.querySelectorAll(".labels-container");
+    // console.log(whatever)
+
+    var ticksContainers = document.querySelectorAll(".tick");
+    console.log(ticksContainers[0].childNodes)
+   
     
+    function selectAxisLegends(texts) {
+        axisLegends =[];
+        for(var i = 0; i < texts.length; i++) {            
+            if(texts[i].hasAttribute("id")) {
+                axisLegends.push(texts[i])    
+                console.log("fired")
+            }
+            console.log("fired")
+            return axisLegends;
+    }
+    var texts = document.querySelectorAll("text")
+    var axisLegends = selectAxisLegends(texts);
+    console.log(axisLegends)
+
+    // axisLegends[i].setAttribute("fill", options.strokeColor)
+    // axisLegends[i].setAttribute("font-size", "30")
+    }
 }
 
 //defining margin of svg;
@@ -256,7 +279,7 @@ var polarChartOptions = {
     // size will work for both width and height;
     //adding margin to the size;
     size: 600 + margin,
-    strokeColor: "grey",
+    strokeColor: "rgb(142, 154, 175)",
     //how many x-circles there will be
     //the number of levels will adjust to the height highest Bar
     levels: Math.round(theHighestBar/10),
