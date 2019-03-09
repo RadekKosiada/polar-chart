@@ -135,7 +135,8 @@ function drawPolarChart(options, appData) {
         .attr("stroke", options.strokeColor)
         .attr("stroke-dasharray", options.dashesLength)
         .attr("stroke-width", options.dashesWidth)
-        .attr("fill", "none");
+        .attr("fill", "none")
+        .attr("opacity", "0.2")
 
 
     ///////// LABELS //////////////////////////////////////////////
@@ -165,12 +166,12 @@ function drawPolarChart(options, appData) {
         .enter().append("text")
         .attr("class", "text-labels")  
         //needs to be centered: endAngle - startAngle/2 * half of the string in pixels          
-        // .attr("x", 40)
-        .attr("dy", 25)
+        .attr("x", 70)
+        .attr("dy", 15)
         .append("textPath") 
         //! 
         .attr("xlink:href", function (d, i) { return "#label-arc-" + i; })
-        .attr("fill", "black")
+        .attr("fill", options.strokeColor)
         .attr("text-anchor", "beginning")
         .text(function (d, i) { return d; })
 
@@ -231,30 +232,20 @@ function drawPolarChart(options, appData) {
     // console.log(whatever)
 
     var ticksContainers = document.querySelectorAll(".tick");
-    console.log(ticksContainers[0].childNodes)
-   
-    
-    function selectAxisLegends(texts) {
-        axisLegends =[];
-        for(var i = 0; i < texts.length; i++) {            
-            if(texts[i].hasAttribute("id")) {
-                axisLegends.push(texts[i])    
-                console.log("fired")
-            }
-            console.log("fired")
-            return axisLegends;
-    }
-    var texts = document.querySelectorAll("text")
-    var axisLegends = selectAxisLegends(texts);
-    console.log(axisLegends)
+    console.log(ticksContainers[0].childNodes[1])
 
-    // axisLegends[i].setAttribute("fill", options.strokeColor)
-    // axisLegends[i].setAttribute("font-size", "30")
+    for(var i = 0; i < ticksContainers.length; i++) {
+        ticksContainers[i].childNodes[1].setAttribute("fill", options.strokeColor)
+        ticksContainers[i].childNodes[1].setAttribute("font-size", options.legendFontSize)
+        ticksContainers[i].childNodes[1].setAttribute("fill-opacity", options.legendOpacity)
+        ticksContainers[i].childNodes[1].setAttribute("text-anchor", "middle")
+        ticksContainers[i].childNodes[1].setAttribute("x", "-2")
     }
+ 
 }
 
 //defining margin of svg;
-var margin = 70;
+var margin = 80;
 // storing all the options of the chart in an object;
 // for easy access, if need to change;
 // will be passed to function that draws the chart together with data;
@@ -287,6 +278,8 @@ var polarChartOptions = {
     dashesLength: 2,
     padAngle: 0.2, //specifies padding in radians (the angle of the padding) of the bars;
     padRadius: 20, //defines the linear distance between the bars; 
+    legendOpacity: 0.8,
+    legendFontSize: 20,
     c: {
         orange: "rgb(255, 96, 17)",
         green: "rgb(151, 216, 157)",

@@ -6,13 +6,14 @@ yScale dla wykresu/dla bars!!
 size dopasowac - margins? left, right, bottom, top? zeby labels sie zmiescily tez
 (number of) ticks to be fixed
 fix the circles
+kolory (hard coded)
+styling of scale
 
 #TODO
-kolory 
-skala do ladniejszej stylizacji
+
+
 x startAngle of each arc, but divided by 2; for labels
 
-styling of scale
 dopasowanie wielkosci do ekranu?
 hover effect- show labels, when you hover
 input, so users can decide on the dimensions
