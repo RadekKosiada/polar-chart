@@ -6,7 +6,7 @@ var app = new Vue({
             'Industrial 80': 80,
             // console.log(app["Core AI"])
             'Core AI 25': 25,
-            'VCs 100': 102.2,
+            'VCs 100': 100,
             'CVCs 58': 58,
             'Acc/includ 45': 45,
             'Meetups 12': 12,
@@ -69,6 +69,23 @@ function drawPolarChart(options, appData) {
     var theHighestBar = Math.max(...barsHeights);
     console.log(theHighestBar)
 
+    //////// COLORS ///////////////////////////////////////////////
+    var numColors = Object.keys(options.c).length;
+    console.log(numColors)
+    barsLabels.forEach(function(elem, i) {
+        colorsArr = [];
+        while(barsLabels.length > 0) {
+            colorsArr.push(barsLabels.splice(0, numColors-1))
+        }
+        
+        return colorsArr;
+    })
+    console.log(colorsArr[0]);
+
+    var colors = d3.scaleOrdinal()
+    .domain([colorsArr[0], colorsArr[1], colorsArr[2], colorsArr[3]])
+    .range([options.c.orange, options.c.green, options.c.blue, options.c.darkblue]);
+
     ////// CHARTSCALE &  BARS /////////////////////////
 
     var chartScale  = d3.scaleLinear()
@@ -81,7 +98,7 @@ console.log(innerRadius, options.margin)
         .innerRadius(innerRadius)
         .startAngle(function (d, i) { return (i * 2 * Math.PI) / numberOfBars; })
         .endAngle(function (d, i) { return ((i + 1) * 2 * Math.PI) / numberOfBars; })
-        .outerRadius(function (d, i) { console.log(d); return chartScale(d+(theHighestBar/options.levels)); })
+        .outerRadius(function (d, i) { return chartScale(d+(theHighestBar/options.levels)); })
         .padAngle(options.padAngle)
         .padRadius(options.padRadius);
 
@@ -89,12 +106,13 @@ console.log(innerRadius, options.margin)
         .data(barsHeights)
         .enter()
         .append("path")
-        .attr("fill", "grey")
-        .attr("fill-opacity", "0.85")
+        .attr("fill", function(d, i) { return colors(i) })
+        .attr("fill-opacity", "1")
         .attr("d", createBars)
         //adding margin*1 to x & y attributes to center the bars;
         .attr("transform", "translate(" + (options.size / 2 + options.margin )+ "," + (options.size / 2 + options.margin) + ")")
 
+    
     ////// CIRCLES ///////////////////////
     svg.selectAll(".levels")
         //appending data to circles
@@ -154,7 +172,7 @@ console.log(innerRadius, options.margin)
         var labelsArray = labels._groups[0];
       
         labelsArray.forEach(function(elem) {
-            console.log((elem.getComputedTextLength()));
+            // console.log((elem.getComputedTextLength()));
             elem.setAttribute("x", (Math.PI*2/barsLabels.length/2 + elem.getComputedTextLength()/2))
     
         })
@@ -183,7 +201,6 @@ console.log(innerRadius, options.margin)
     //https://github.com/d3/d3-axis
     // .ticks()
 
-    console.log(innerRadius)
     var yAxisGroup = svg.append("g")
         .attr("class", "y-axis")
         //substracting innerRadius from y attribute to move axis upwards;
@@ -235,6 +252,12 @@ var polarChartOptions = {
     dashesLength: 2,
     padAngle: 0.2, //specifies padding in radians (the angle of the padding) of the bars;
     padRadius: 20, //defines the linear distance between the bars; 
+    c: {
+        orange: "rgb(255, 96, 17)",
+        green: "rgb(151, 216, 157)",
+        blue: "rgb(51, 140, 204)", 
+        darkblue: "rgb(41, 47, 104)"
+    }
 }
 
 drawPolarChart(polarChartOptions, app._data.chartData);

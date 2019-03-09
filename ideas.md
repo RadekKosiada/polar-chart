@@ -9,6 +9,7 @@ fix the circles
 
 #TODO
 kolory 
+skala do ladniejszej stylizacji
 x startAngle of each arc, but divided by 2; for labels
 
 styling of scale
