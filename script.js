@@ -20,8 +20,7 @@ var app = new Vue({
         mounted() {
             console.log(this.numberOfInputs)
             console.log(this.chartData)
-            console.log(Object.keys(this.chartData))
-        
+            console.log(Object.keys(this.chartData))     
     }
     
 })
