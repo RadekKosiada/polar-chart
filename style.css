@@ -29,8 +29,14 @@ body {
     fill: black;
 }
 
+#dashboard {
+    height: 640px;
+  overflow-y: scroll;
+}
+
 select {
     cursor: pointer;
+    text-align: center;
 }
 .orange { background-color:rgb(255, 96, 17); }
 .green { background-color: rgb(151, 216, 157); }
