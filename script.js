@@ -3,18 +3,18 @@ var app = new Vue({
     data: {
         numberOfInputs: 1,
         chartData: {
-            'Industrial 80': 80,
+            'Industrial': 80,
             // console.log(app["Core AI"])
-            'Core AI 25': 25,
-            'VCs 100': 100,
-            'CVCs 58': 58,
-            'Acc/includ 45': 45,
-            'Meetups 12': 12,
-            'Corp. RCs 62': 62,
-            'Non-corp. RCs 80': 80,
-            'Top unis 60': 60,
-            'Students 89': 89,
-            'AI publications 41': 41,
+            'Core AI': 25,
+            'VCs': 100,
+            'CVCs': 58,
+            'Acc/includ': 45,
+            'Meetups': 12,
+            'Corp. RCs': 62,
+            'Non-corp. RCs': 80,
+            'Top unis': 60,
+            'Students': 89,
+            'AI publications': 41
         }
     }
 })
@@ -26,7 +26,7 @@ console.log(Object.keys(app._data.chartData).length)
 function drawPolarChart(options, appData) {
     console.log(options, appData);
     //creating an svg node
-    var svg = d3.select("#app")
+    var svg = d3.select("#chart")
         .append("svg")
         .attr("class", "polar-chart")
         //adding margins*2 for left&right;
@@ -100,15 +100,15 @@ function drawPolarChart(options, appData) {
     var counter = 0;
     var num = barsArr.length/numColors
     for(var i = 0; i < barsArr.length; i++) {
-        if(i < barsArr.length/numColors) {
+        if(i < 2) {
             counter++;
             barsArr[i].setAttribute("fill", options.c.orange);
             // console.log("0", counter);
-        } else if (i < 6) {
+        } else if (i < 4) {
             counter++;
             barsArr[i].setAttribute("fill", options.c.green);    
             // console.log("1", counter);        
-        } else if(i<9) {
+        } else if(i<8) {
             counter++;
             barsArr[i].setAttribute("fill", options.c.blue);  
             // console.log("2", counter);          
@@ -166,9 +166,10 @@ function drawPolarChart(options, appData) {
         .enter().append("text")
         .attr("class", "text-labels")  
         //needs to be centered: endAngle - startAngle/2 * half of the string in pixels          
-        .attr("x", 70)
+        .attr("x", 80)
         .attr("dy", 15)
         .append("textPath") 
+        .attr("font-size", options.labelFontSize)
         //! 
         .attr("xlink:href", function (d, i) { return "#label-arc-" + i; })
         .attr("fill", options.strokeColor)
@@ -235,11 +236,11 @@ function drawPolarChart(options, appData) {
     console.log(ticksContainers[0].childNodes[1])
 
     for(var i = 0; i < ticksContainers.length; i++) {
-        ticksContainers[i].childNodes[1].setAttribute("fill", options.strokeColor)
-        ticksContainers[i].childNodes[1].setAttribute("font-size", options.legendFontSize)
-        ticksContainers[i].childNodes[1].setAttribute("fill-opacity", options.legendOpacity)
-        ticksContainers[i].childNodes[1].setAttribute("text-anchor", "middle")
-        ticksContainers[i].childNodes[1].setAttribute("x", "-2")
+        ticksContainers[i].childNodes[1].setAttribute("fill", options.strokeColor);
+        ticksContainers[i].childNodes[1].setAttribute("font-size", options.legendFontSize);
+        ticksContainers[i].childNodes[1].setAttribute("fill-opacity", options.legendOpacity);
+        ticksContainers[i].childNodes[1].setAttribute("text-anchor", "middle");
+        ticksContainers[i].childNodes[1].setAttribute("x", "-2");
     }
  
 }
@@ -269,7 +270,7 @@ var polarChartOptions = {
     margin: margin,
     // size will work for both width and height;
     //adding margin to the size;
-    size: 600 + margin,
+    size: 400 + margin,
     strokeColor: "rgb(142, 154, 175)",
     //how many x-circles there will be
     //the number of levels will adjust to the height highest Bar
@@ -280,7 +281,8 @@ var polarChartOptions = {
     padRadius: 20, //defines the linear distance between the bars; 
     legendOpacity: 0.8,
     circlesOpacity: 0.5,
-    legendFontSize: 20,
+    legendFontSize: 10,
+    labelFontSize: 10,
     c: {
         orange: "rgb(255, 96, 17)",
         green: "rgb(151, 216, 157)",

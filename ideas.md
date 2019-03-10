@@ -11,12 +11,15 @@ styling of scale
 
 #TODO
 
-
+add Muli to JS
 x startAngle of each arc, but divided by 2; for labels
 
 dopasowanie wielkosci do ekranu?
 hover effect- show labels, when you hover
 input, so users can decide on the dimensions
+
+background color for text?
+turn upside down if on the bottom
 
 
 
