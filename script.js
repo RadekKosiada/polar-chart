@@ -86,8 +86,6 @@ function drawPolarChart(options, appData) {
         .data(barsHeights)
         .enter()
         .append("path")
-        // .attr("fill", "grey")
-        // .attr("fill-opacity", "0.5")
         .attr("class", "bars")
         .attr("d", createBars)
         //adding margin*1 to x & y attributes to center the bars;
@@ -293,3 +291,40 @@ var polarChartOptions = {
 }
 
 drawPolarChart(polarChartOptions, app._data.chartData);
+
+// MOUSE EFFECTS
+var barsArray = document.getElementsByClassName("bars");
+console.log(barsArray)
+labelsArray = document.querySelectorAll("textpath");
+console.log(labelsArray)
+
+
+function animateBars() {
+    for(var i = 0; barsArray.length; i++) {
+        barsArray[i].addEventListener("mouseover", mouseOver);
+        barsArray[i].addEventListener("mouseout", mouseOut);
+        labelsArray[i].addEventListener("mouseover", mouseOver)
+        labelsArray[i].addEventListener("mouseout", mouseOut)
+        console.log(i)
+    }
+}
+animateBars();
+
+function mouseOver() {
+    this.classList.add("activate")
+    this.classList.remove("some")
+    console.log(this)
+    var active = document.querySelectorAll(".activate");
+    console.log(active);
+    for(var i = 0; i < barsArray.length; i++){
+        if(!barsArray[i].classList.contains("activate")) {
+            barsArray[i].setAttribute("class", "some")
+        }
+    }
+
+
+}
+
+function mouseOut() {
+    this.setAttribute("class", "deactivate")
+}
