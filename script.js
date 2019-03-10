@@ -322,7 +322,6 @@ function mouseOut() {
     this.setAttribute("class", "deactivate now")
 }
 
-
 function fn1() {
     console.log("fn fired")
     for(var i=0; i < barsArray.length; i++) {
