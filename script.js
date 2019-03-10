@@ -311,18 +311,7 @@ function animateBars() {
 animateBars();
 
 function mouseOver() {
-    this.classList.add("activate")
-    this.classList.remove("some")
-    console.log(this)
-    var active = document.querySelectorAll(".activate");
-    console.log(active);
-    for(var i = 0; i < barsArray.length; i++){
-        if(!barsArray[i].classList.contains("activate")) {
-            barsArray[i].setAttribute("class", "some")
-        }
-    }
-
-
+    this.setAttribute("class", "activate")
 }
 
 function mouseOut() {
