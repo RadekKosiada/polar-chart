@@ -58,8 +58,6 @@ option:hover {
     opacity: 0.8;
     transition-duration: 0.5s;
     stroke: grey;
-    stroke-width: 0.25vw;
-    color: black;
 }
 
 .deactivate {
@@ -69,4 +67,8 @@ option:hover {
 
 .some {
     fill: red;
+}
+
+.active-title {
+    stroke: black;
 }
