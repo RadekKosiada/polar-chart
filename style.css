@@ -28,3 +28,24 @@ body {
     stroke: none;
     fill: black;
 }
+
+select {
+    cursor: pointer;
+}
+.orange { background-color:rgb(255, 96, 17); }
+.green { background-color: rgb(151, 216, 157); }
+.blue { background-color: rgb(51, 140, 204); }
+.purple { background-color: rgb(162, 136, 227); }
+
+option:hover {
+    color: white;
+    cursor: pointer;
+    /* Firefox */
+    box-shadow: 0 0 10px 100px #000 inset; 
+}
+
+.container {
+    border: 1px solid grey;
+    padding: 0 1vw;
+    margin: 1vw 0;
+}

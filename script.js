@@ -114,7 +114,7 @@ function drawPolarChart(options, appData) {
             // console.log("2", counter);          
         } else {
             counter++;
-            barsArr[i].setAttribute("fill", options.c.darkblue);
+            barsArr[i].setAttribute("fill", options.c.purple);
             // console.log("3", counter);
         }        
     }
@@ -287,7 +287,8 @@ var polarChartOptions = {
         orange: "rgb(255, 96, 17)",
         green: "rgb(151, 216, 157)",
         blue: "rgb(51, 140, 204)", 
-        darkblue: "rgb(41, 47, 104)"
+        darkblue: "rgb(41, 47, 104)",
+        purple: "rgb(162, 136, 227)"
     }
 }
 
