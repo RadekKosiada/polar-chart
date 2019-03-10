@@ -1,7 +1,7 @@
 var app = new Vue({
     el: '#app',
     data: {
-        numberOfInputs: 1,
+        numberOfInputs: 11,
         chartData: {
             'Industrial': 80,
             // console.log(app["Core AI"])
@@ -16,11 +16,19 @@ var app = new Vue({
             'Students': 89,
             'AI publications': 41
         }
+    },
+        mounted() {
+            console.log(this.numberOfInputs)
+            console.log(this.chartData)
+            console.log(Object.keys(this.chartData))
+        
     }
+    
 })
 
 console.log(app._data.chartData);
-console.log(Object.keys(app._data.chartData))
+console.log(Object.keys(app._data.chartData)) //labels
+console.log(Object.values(app._data.chartData)) // values
 console.log(Object.keys(app._data.chartData).length)
 
 function drawPolarChart(options, appData) {
