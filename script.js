@@ -346,36 +346,28 @@ console.log(labelsArray)
 
 function animateBars() {
     for(var i = 0; i < barsArray.length; i++) {
-        for(var j =0;  j < labelsArray.length; j++) {
-            barsArray[i].addEventListener("mouseover", mouseOver);
-            barsArray[i].addEventListener("mouseout", mouseOut);
-            if(i===j)  {
-            labelsArray[j].addEventListener("mouseover", mouseOver)
-            labelsArray[j].addEventListener("mouseout", mouseOut);
-            }
-        }   
+       
+            barsArray[i].addEventListener("mouseover", mouseOverBar.bind(barsArray[i], labelsArray[i] ));
+            barsArray[i].addEventListener("mouseout", mouseOutBar.bind(barsArray[i], labelsArray[i]));
+        
+               
     }
 }
 animateBars();
 
-function mouseOver() {
-    this.setAttribute("class", "activate now") 
-    fn1()  
+function mouseOverBar(label) {
+    console.log("!!!!!!", arguments)
+    //this = barsArray[i]; as event listener is added to the bar;
+    this.classList.add("activate")     
+    label.classList.add("active-title")
+
+
 }
 
-function mouseOut() {
-    this.setAttribute("class", "deactivate now")
+function mouseOutBar(label) {
+    this.classList.remove("activate")
+    label.classList.remove("active-title")
 }
 
-function fn1() {
-    console.log("fn fired")
-    for(var i=0; i < barsArray.length; i++) {
-        if(barsArray[i].classList.contains("activate")) {
-            console.log("Fired!!!!")
-            labelsArray[i].classList.add("active-title")
-            break;
-        }
-    } 
-}
 
 
