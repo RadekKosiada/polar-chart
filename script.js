@@ -176,18 +176,19 @@ function drawPolarChart(options, appData) {
 
     // function that will create another arc to append text elements to it;
     var labelsArc = d3.arc()
-        .innerRadius(innerRadius * (options.levels+2))
-        .outerRadius(innerRadius * (options.levels+1))
+        .innerRadius(innerRadius * (options.levels+1))
+        .outerRadius(innerRadius * (options.levels+2))
         .startAngle(function (d, i) { return (i * 2 * Math.PI) / numberOfBars; })
         .endAngle(function (d, i) { return ((i + 1) * 2 * Math.PI) / numberOfBars; })
 
-    // https://www.visualcinnamon.com/2015/09/placing-text-on-arcs.html
+    // http://bl.ocks.org/nbremer/bf6d15082ea81ce69b55
     //creating another arc => anchor for labels;
     var labelsContainers = svg.selectAll(".labels-arc")
-        .data(barsHeights)
+        .data(barsLabels)
         .enter()
         .append("path")
         .attr("class", "labels-container")
+        //id will be the anchor fot the texPath later;
         .attr("id", function (d, i) { return "label-arc-" + i; })
         // .attr("id", "labels-arc-id")
         .attr("transform", "translate(" + (options.size / 2 + options.margin )+ "," + (options.size / 2 + options.margin) + ")")
@@ -201,6 +202,7 @@ function drawPolarChart(options, appData) {
         //needs to be centered: endAngle - startAngle/2 * half of the string in pixels          
         .attr("x", 80)
         .attr("dy", 15)
+        //appending "textpath" to "text"
         .append("textPath") 
         .attr("font-size", options.labelFontSize)        
         //! 
@@ -210,6 +212,7 @@ function drawPolarChart(options, appData) {
         .text(function (d, i) { return d; })
 
         //defining an array of all labels;
+        console.log(document.getElementsByClassName("text-labels"))
         var labelsArray = labels._groups[0];
         //defining an array of all paths = containers of labels;
         var labelsContainersArr = labelsContainers._groups[0];
