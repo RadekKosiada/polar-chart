@@ -62,7 +62,6 @@ function drawPolarChart(options, appData) {
     }
 
     var barsLabels = getBarsLabels();
-    // console.log(barsLabels);
 
     //finding the highest bar hight for the scale; 
     var theHighestBar = Math.max(...barsHeights);
@@ -70,10 +69,13 @@ function drawPolarChart(options, appData) {
     ////// CHARTSCALE &  BARS /////////////////////////
 
     var chartScale  = d3.scaleLinear()
+        //passing data => min and max heights of the bars;
         .domain([0, theHighestBar])
+        //passing the size of chart => min and max of the chart; boundaries within the data will transformed;
         .range([0, options.size / 2]);
   
     //https://d3indepth.com/shapes/
+    //defining function that will create arcs/bars;
     var createBars = d3.arc()
         .innerRadius(innerRadius)
         .startAngle(function (d, i) { return (i * 2 * Math.PI) / numberOfBars; })
@@ -119,20 +121,21 @@ function drawPolarChart(options, appData) {
 
     ////// CIRCLES ///////////////////////
     var firstLevel = 0;
-    var lastLevel = options.levels;
-    console.log(lastLevel);
+    var lastLevelIndex = options.levels;
+    console.log(lastLevelIndex);
     
     //creating an array consisting of integers for every single circle;
     function creatingAllCirclesArr() {
         var allCirclesArr = [];
         //adding 2 due to indexing from 0;
-        for(var i = 0; i < lastLevel + 2; i++) {
+        for(var i = 0; i < lastLevelIndex + 2; i++) {
             allCirclesArr.push(i);
         }
         return allCirclesArr;
     }
     var allCirclesLevels = creatingAllCirclesArr();
-    
+
+    // https://www.dashingd3js.com/svg-basic-shapes-and-d3js
     svg.selectAll(".x-circle")
         //appending data to circles;
         //creating an array from 0 to the last level +2;
@@ -162,7 +165,7 @@ function drawPolarChart(options, appData) {
 
     if(allCirclesLevels.length > 12) {
         for(var i = 0; i < circles.length; i++) {
-            if (i%2 !==0) {
+            if (i%2) {
                 circles[i].setAttribute("display", "none");
                 // circles[circles.length-1].setAttribute("display", "block")
             }
@@ -226,32 +229,29 @@ function drawPolarChart(options, appData) {
     /// AXIS /////////////////////////////////
 
     // https://www.dashingd3js.com/d3js-axes
-    var axisScale = d3.scaleLinear()
+    var chartScaleReversed = d3.scaleLinear()
         //heights of the bars
         .domain([0, theHighestBar])
         //size of svg
         .range([0, -options.size / 2]);
 
     var yAxis = d3.axisLeft()
-        .scale(axisScale)
-    //https://github.com/d3/d3-axis
+        .scale(chartScaleReversed)
 
     var yAxisReverse = d3.axisLeft()
     //using chartScale defined before for bars;
         .scale(chartScale)
-    //https://github.com/d3/d3-axis
+    // for ticks https://github.com/d3/d3-axis
     // .ticks()
 
     var yAxisGroup = svg.append("g")
         .attr("class", "y-axis-container")
-        .attr("transform", "translate(" + (options.size / 2 + options.margin )+ "," + (options.size / 2 + options.margin) + ")")
         //substracting innerRadius from y attribute to move axis upwards;
         .attr("transform", "translate(" + (options.size / 2 + options.margin ) + "," + (options.size / 2 + options.margin - innerRadius) + ")")
         .call(yAxis);
 
     var yAxisGroupReverse = svg.append("g")
     .attr("class", "y-axis-container")   
-    .attr("transform", "translate(" + (options.size / 2 + options.margin )+ "," + (options.size / 2 + options.margin) + ")")
      //adding innerRadius from y attribute to move axis downwards;
     .attr("transform", "translate(" + (options.size / 2 + options.margin ) + "," + (options.size / 2 + options.margin + innerRadius) + ")")
     .call(yAxisReverse);
@@ -259,7 +259,7 @@ function drawPolarChart(options, appData) {
     //STYLING AXIS 
     var axisNodes = document.getElementsByClassName("domain")
     for(var i = 0; i < axisNodes.length; i++) {
-        axisNodes[i].setAttribute("stroke", "none")
+        axisNodes[i].setAttribute("display", "none")
     }
 
     //STYLING AXIS TICKS
@@ -318,6 +318,8 @@ var polarChartOptions = {
     padRadius: 20, //defines the linear distance between the bars; 
     legendOpacity: 0.8,
     circlesOpacity: 0.5,
+    //to make font more flexible I could write an function counting it and passing to the object;
+    //i.e. options.size/40;
     legendFontSize: 10,
     labelFontSize: 10,
     c: {
