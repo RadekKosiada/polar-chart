@@ -118,24 +118,28 @@ function drawPolarChart(options, appData) {
     }
    
     ////// CIRCLES ///////////////////////
-    svg.selectAll(".levels")
+    svg.selectAll(".x-circle")
         //appending data to circles
         .data(d3.range(0, options.levels + 2))
         .enter()
         .append("circle")
         .attr("class", "x-circle")
+        .attr("id", function(d, i) { return "x-circle-" + i;})
         .attr("r", function (d, i) {
             return (options.size / 2) / options.levels * d;
         })
         //adding margin*1 to center the circles;
         .attr("cx", options.size / 2 + options.margin)
         .attr("cy", options.size / 2 + options.margin)
-        .attr("stroke", options.strokeColor)
+        .attr("stroke", options.c.grey)
         .attr("stroke-dasharray", options.dashesLength)
         .attr("stroke-width", options.dashesWidth)
         .attr("fill", "none")
         .attr("opacity", options.circlesOpacity)
 
+    //STYLING FIRST CIRCLES (not 0 which has radius = 0 and is not visible anyway, but 1, radius = (options.size / 2) / options.levels)
+    var firstCircle = document.getElementById("x-circle-1");    
+    firstCircle.setAttribute("stroke", "none")
 
     ///////// LABELS //////////////////////////////////////////////
 
@@ -170,7 +174,7 @@ function drawPolarChart(options, appData) {
         .attr("font-size", options.labelFontSize)
         //! 
         .attr("xlink:href", function (d, i) { return "#label-arc-" + i; })
-        .attr("fill", options.strokeColor)
+        .attr("fill", options.c.grey)
         .attr("text-anchor", "beginning")
         .text(function (d, i) { return d; })
 
@@ -227,20 +231,20 @@ function drawPolarChart(options, appData) {
         axisTicks[i].setAttribute("display", "none")
     }
 
-    // var whatever = document.querySelectorAll(".labels-container");
-    // console.log(whatever)
-
+    // STYLING AXIS NUMBERS
     var ticksContainers = document.querySelectorAll(".tick");
     console.log(ticksContainers[0].childNodes[1])
 
     for(var i = 0; i < ticksContainers.length; i++) {
-        ticksContainers[i].childNodes[1].setAttribute("fill", options.strokeColor);
+        ticksContainers[i].childNodes[1].setAttribute("fill", options.c.black);
         ticksContainers[i].childNodes[1].setAttribute("font-size", options.legendFontSize);
         ticksContainers[i].childNodes[1].setAttribute("fill-opacity", options.legendOpacity);
         ticksContainers[i].childNodes[1].setAttribute("text-anchor", "middle");
         ticksContainers[i].childNodes[1].setAttribute("x", "-2");
+        //hiding both 0s on scale;
+        ticksContainers[0].childNodes[1].setAttribute("display", "none");
+        ticksContainers[0+ticksContainers.length/2].childNodes[1].setAttribute("display", "none");
     }
- 
 }
 
 //defining margin of svg;
@@ -248,7 +252,6 @@ var margin = 80;
 // storing all the options of the chart in an object;
 // for easy access, if need to change;
 // will be passed to function that draws the chart together with data;
-
 
 function getBarsHeight(data) {
     var heightsArr = [];
@@ -269,7 +272,6 @@ var polarChartOptions = {
     // size will work for both width and height;
     //adding margin to the size;
     size: 400 + margin,
-    strokeColor: "rgb(142, 154, 175)",
     //how many x-circles there will be
     //the number of levels will adjust to the height highest Bar
     levels: Math.round(theHighestBar/10),
@@ -282,6 +284,8 @@ var polarChartOptions = {
     legendFontSize: 10,
     labelFontSize: 10,
     c: {
+        black: "black",
+        grey: "rgb(142, 154, 175)",
         orange: "rgb(255, 96, 17)",
         green: "rgb(151, 216, 157)",
         blue: "rgb(51, 140, 204)", 
@@ -307,8 +311,7 @@ function animateBars() {
             labelsArray[j].addEventListener("mouseover", mouseOver)
             labelsArray[j].addEventListener("mouseout", mouseOut);
             }
-        }
-        
+        }   
     }
 }
 animateBars();
