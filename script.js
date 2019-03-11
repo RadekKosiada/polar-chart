@@ -1,7 +1,7 @@
 var app = new Vue({
     el: '#app',
     data: {
-        numberOfInputs: 1,
+        numberOfInputs: 11,
         chartData: {
             'Industrial': 80,
             // console.log(app["Core AI"])
@@ -14,7 +14,7 @@ var app = new Vue({
             'Non-corp. RCs': 80,
             'Top unis': 60,
             'Students': 89,
-            'AI publications': 41
+            'AI publications': 41,
         }
     }
 })
@@ -116,17 +116,33 @@ function drawPolarChart(options, appData) {
             // console.log("3", counter);
         }        
     }
-   
+
     ////// CIRCLES ///////////////////////
+    var firstLevel = 0;
+    var lastLevel = options.levels;
+    console.log(lastLevel);
+    
+    //creating an array consisting of integers for every single circle;
+    function creatingAllCirclesArr() {
+        var allCirclesArr = [];
+        //adding 2 due to indexing from 0;
+        for(var i = 0; i < lastLevel + 2; i++) {
+            allCirclesArr.push(i);
+        }
+        return allCirclesArr;
+    }
+    var allCirclesLevels = creatingAllCirclesArr();
+    
     svg.selectAll(".x-circle")
-        //appending data to circles
-        .data(d3.range(0, options.levels + 2))
+        //appending data to circles;
+        //creating an array from 0 to the last level +2;
+        .data(allCirclesLevels)
         .enter()
         .append("circle")
         .attr("class", "x-circle")
         .attr("id", function(d, i) { return "x-circle-" + i;})
         .attr("r", function (d, i) {
-            return (options.size / 2) / options.levels * d;
+            return (options.size / 2) / options.levels * i;
         })
         //adding margin*1 to center the circles;
         .attr("cx", options.size / 2 + options.margin)
@@ -140,6 +156,18 @@ function drawPolarChart(options, appData) {
     //STYLING FIRST CIRCLES (not 0 which has radius = 0 and is not visible anyway, but 1, radius = (options.size / 2) / options.levels)
     var firstCircle = document.getElementById("x-circle-1");    
     firstCircle.setAttribute("stroke", "none")
+
+    //HIDING EVERY SECOND CIRCLES IF THEIR NUMBER IS > 15;
+    var circles = document.querySelectorAll(".x-circle");
+
+    if(allCirclesLevels.length > 12) {
+        for(var i = 0; i < circles.length; i++) {
+            if (i%2 !==0) {
+                circles[i].setAttribute("display", "none");
+                // circles[circles.length-1].setAttribute("display", "block")
+            }
+        }
+    }
 
     ///////// LABELS //////////////////////////////////////////////
 
@@ -171,20 +199,29 @@ function drawPolarChart(options, appData) {
         .attr("x", 80)
         .attr("dy", 15)
         .append("textPath") 
-        .attr("font-size", options.labelFontSize)
+        .attr("font-size", options.labelFontSize)        
         //! 
         .attr("xlink:href", function (d, i) { return "#label-arc-" + i; })
         .attr("fill", options.c.grey)
         .attr("text-anchor", "beginning")
         .text(function (d, i) { return d; })
 
-        //defining an array of all labels
+        //defining an array of all labels;
         var labelsArray = labels._groups[0];
+        //defining an array of all paths = containers of labels;
+        var labelsContainersArr = labelsContainers._groups[0];
+        console.log("labels", labelsArray);
+        console.log("ALL", labelsContainersArr);
+
+        //Test for rotating the labelss
+        // labelsArray[0].style.transform = "scale(+1, -1)";
+        // labelsContainersArr[0].style.transform = "scale(+1, -1)";
       
         labelsArray.forEach(function(elem) {
             // console.log((elem.getComputedTextLength()));
             elem.setAttribute("x", (Math.PI*2/barsLabels.length/2 + elem.getComputedTextLength()/2))
-    
+            // elem.style.transform ="rotate(180deg)";
+            // console.log(elem)
         })
     /// AXIS /////////////////////////////////
 
