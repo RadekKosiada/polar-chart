@@ -38,17 +38,7 @@ function drawPolarChart(options, appData) {
     // array with names of all dimensions
     var nameOfBars = Object.keys(appData);
     var innerRadius = options.size / options.levels / 2;
-    var outerRadius = 50;
-    console.log(outerRadius);
-    console.log(appData.CVCs)
-
-    function returnsBarsIndex() {
-        nameOfBars.forEach(function (elem, i) {
-            // console.log(i)
-            return i;
-        });
-    }
-    returnsBarsIndex();
+    // var outerRadius = 50;
 
     var barsHeights = getBarsHeight(appData);
     console.log(barsHeights);
@@ -68,6 +58,8 @@ function drawPolarChart(options, appData) {
 
     ////// CHARTSCALE &  BARS /////////////////////////
 
+    // https://www.dashingd3js.com/d3js-axes
+    // it counts units for range (px) for each unit in domain;
     var chartScale  = d3.scaleLinear()
         //passing data => min and max heights of the bars;
         .domain([0, theHighestBar])
@@ -75,10 +67,11 @@ function drawPolarChart(options, appData) {
         .range([0, options.size / 2]);
   
     //https://d3indepth.com/shapes/
+    // https://github.com/d3/d3-shape
     //defining function that will create arcs/bars;
     var createBars = d3.arc()
         .innerRadius(innerRadius)
-        .startAngle(function (d, i) { return (i * 2 * Math.PI) / numberOfBars; })
+        .startAngle(function (d, i) { return i * (2 * Math.PI / numberOfBars) })
         .endAngle(function (d, i) { return ((i + 1) * 2 * Math.PI) / numberOfBars; })
         .outerRadius(function (d, i) { return chartScale(d+(theHighestBar/options.levels)); })
         .padAngle(options.padAngle)
@@ -312,7 +305,7 @@ var polarChartOptions = {
     margin: margin,
     // size will work for both width and height;
     //adding margin to the size;
-    size: 400 + margin,
+    size: 423 + margin,
     //how many x-circles there will be
     //the number of levels will adjust to the height highest Bar
     levels: Math.round(theHighestBar/10),
@@ -341,9 +334,7 @@ drawPolarChart(polarChartOptions, app._data.chartData);
 
 // MOUSE EFFECTS
 var barsArray = document.getElementsByClassName("bars");
-console.log(barsArray)
 labelsArray = document.querySelectorAll("textpath");
-console.log(labelsArray)
 
 function animateBars() {
     for(var i = 0; i < barsArray.length; i++) {       
@@ -356,7 +347,7 @@ animateBars();
 var toolTip = document.querySelector(".tooltip");
 
 function mouseOverBar(index, event) {
-    console.log("!!!!!!", arguments[1], )
+    // console.log("!!!!!!", arguments[1], )
     //this = barsArray[i]; as event listener is added to the bar;
     this.classList.add("activate")     
     labelsArray[index].classList.add("active-title")
