@@ -77,18 +77,17 @@ var app = new Vue({
 
     updated() {
             this.chartData= {
-                'Industrial': this.firstInput,
-                // console.log(app["Core AI"])
-                'Core AI': this.secondInput,
-                'VCs': this.thirdInput,
-                'CVCs': this.fourthInput,
-                'Acc/includ': this.fifthInput,
-                'Meetups': this.sixthInput,
-                'Corp. RCs': this.seventhInput,
-                'Non-corp. RCs': this.eighthInput,
-                'Top unis': this.ninthInput,
-                'Students': this.tenthInput,
-                'AI publications': this.eleventhInput,   
+                'Industrial': Number(this.firstInput),
+                'Core AI': Number(this.secondInput),
+                'VCs': Number(this.thirdInput),
+                'CVCs': Number(this.fourthInput),
+                'Acc/includ': Number(this.fifthInput),
+                'Meetups': Number(this.sixthInput),
+                'Corp. RCs': Number(this.seventhInput),
+                'Non-corp. RCs': Number(this.eighthInput),
+                'Top unis': Number(this.ninthInput),
+                'Students': Number(this.tenthInput),
+                'AI publications': Number(this.eleventhInput),   
             },
             Object.keys(this.chartData)[10] = this.eleventhNm;
 
@@ -157,7 +156,7 @@ function drawPolarChart(options, appData) {
         .startAngle(function (d, i) { return i * (2 * Math.PI / numberOfBars) })
         .endAngle(function (d, i) { return ((i + 1) * 2 * Math.PI) / numberOfBars; })
         // .outerRadius(function (d, i) { console.log(d); return chartScale(d+(theHighestBar/options.levels)); })
-        .outerRadius(function (d, i) { console.log(d); return chartScale(d); })
+        .outerRadius(function (d, i) { console.log(typeof d); return chartScale(d+(theHighestBar/options.levels)); })
         .padAngle(options.padAngle)
         .padRadius(options.padRadius);
 
@@ -200,7 +199,6 @@ function drawPolarChart(options, appData) {
     ////// CIRCLES ///////////////////////
     var firstLevel = 0;
     var lastLevelIndex = options.levels;
-    console.log(lastLevelIndex);
     
     //creating an array consisting of integers for every single circle;
     function creatingAllCirclesArr() {
@@ -351,7 +349,6 @@ function drawPolarChart(options, appData) {
 
     // STYLING AXIS NUMBERS
     var ticksContainers = document.querySelectorAll(".tick");
-    console.log(ticksContainers[0].childNodes[1])
 
     for(var i = 0; i < ticksContainers.length; i++) {
         ticksContainers[i].childNodes[1].setAttribute("fill", options.c.black);
