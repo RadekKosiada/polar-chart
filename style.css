@@ -6,11 +6,17 @@
     background-color: lightgrey;
 } */
 
-/* #app {
+#app {
     display: grid;
     grid-template-columns: 30% 65%;
     grid-gap: 2.5%;
-  } */
+  }
+
+#dashboard {
+    height: 640px;
+    overflow-y: scroll;
+
+}
 
 #app svg,  {
     border: 1px solid grey;
