@@ -98,11 +98,7 @@ var app = new Vue({
             if(this.allCharts.length =1) {
                 d3.select("svg").remove();
                 drawPolarChart(polarChartOptions, this.chartData);
-<<<<<<< HEAD
-            }   
-=======
             }    
->>>>>>> 1da44c52b3d02737d8c031cb35c40915e1c694da
     }   
 })
 
