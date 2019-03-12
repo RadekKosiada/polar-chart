@@ -17,74 +17,54 @@ var app = new Vue({
             'AI publications': 41,   
         },
         firstInput: 80,
-        firstValue: 0,
-        secondInput: 25,
-        secondValue: 0,
-        thirdInput: 100,
-        thirdValue: 0,
-        fourthInput: 58,
-        fourthValue: 0,
-        fifthInput: 45,
-        fifthValue: 0,
-        sixthInput: 12,
-        sixthValue: 0,
-        seventhInput: 62,
-        seventhValue: 0,
-        eighthInput: 80,
-        eighthValue: 0,
-        ninthInput: 60,
-        ninthValue: 0,
-        tenthInput: 89,
-        tenthValue: 0,
+        secondInput: 25,        
+        thirdInput: 100,       
+        fourthInput: 58,        
+        fifthInput: 45,        
+        sixthInput: 12,     
+        seventhInput: 62,  
+        eighthInput: 80,        
+        ninthInput: 60,    
+        tenthInput: 89,       
         eleventhInput: 41,
-        eleventhValue: 0,   
+        firstNm: 'Industrial',
+        secondNm: 'Core AI',
+        thirdNm: 'VCs', 
+        fourthNm: 'CVCs',
+        fifthNm: 'Acc/includ',
+        sixthNm: 'Meetups',
+        seventhNm: 'Corp. RCs',
+        eighthNm: 'Non-corp. RCs',
+        ninthNm: 'Top unis',
+        tenthNm: 'Students',
+        eleventhNm: 'AI publications'
 
     }, 
     methods: {
-        handleFirstInput(firstValue) {
-            this.firstInput = firstValue;
-            // Object.values(this.chartData)[0] = firstValue;
-        },
-        handleSecondInput(secondValue) {
-            this.secondInput = secondValue;
-            // Object.values(this.chartData)[1] = secondValue;
-        },
-        handleThirdInput(thirdValue) {
-            this.thirdInput = thirdValue;
-            // Object.values(this.chartData)[2] = thirdValue;
-        },
-        handleFourthInput(fourthValue) {
-            this.fourthInput = fourthValue;
-            // Object.values(this.chartData)[3] = fourthValue;
-        },
-        handleFifthInput(fifthValue) {
-            this.fifthInput = fifthValue;
-            // Object.values(this.chartData)[4] = fifthValue;
-        },
-        handleSixthInput(sixthValue) {
-            this.sixthInput = sixthValue;
-            // Object.values(this.chartData)[5] = sixthValue;
-        },
-        handleSeventhInput(seventhValue) {
-            this.seventhInput = seventhValue;
-            // Object.values(this.chartData)[6] = seventhValue;
-        },
-        handleEighthInput(eighthValue) {
-            this.eighthInput = eighthValue;
-            // Object.values(this.chartData)[7] = eighthValue;
-        },
-        handleNinthInput(ninthValue) {
-            this.ninthInput = ninthValue;
-            // Object.values(this.chartData)[8] = ninthValue;
-        },
-        handleTenthInput(tenthValue) {
-            this.tenthInput = tenthValue;
-            // Object.values(this.chartData)[9] = tenthValue;
-        },
-        handleEleventhInput(eleventhValue) {
-            this.eleventhInput = eleventhValue;
-            // Object.values(this.chartData)[10] = eleventh;
-        },
+        handleFirstInput(firstValue) {this.firstInput = firstValue; },
+        handleSecondInput(secondValue) {this.secondInput = secondValue;},
+        handleThirdInput(thirdValue) {this.thirdInput = thirdValue;},
+        handleFourthInput(fourthValue) {this.fourthInput = fourthValue;},
+        handleFifthInput(fifthValue) { this.fifthInput = fifthValue; },
+        handleSixthInput(sixthValue) {this.sixthInput = sixthValue; },
+        handleSeventhInput(seventhValue) { this.seventhInput = seventhValue; },
+        handleEighthInput(eighthValue) { this.eighthInput = eighthValue; },
+        handleNinthInput(ninthValue) { this.ninthInput = ninthValue; },
+        handleTenthInput(tenthValue) {this.tenthInput = tenthValue; },
+        handleEleventhInput(eleventhValue) {this.eleventhInput = eleventhValue; },
+
+        handleFirstName(name1) {this.firstNm = name1},
+        handleSecondName(name2) {this.secondNm = name2},
+        handleThirdName(name3) {this.thirdNm = name3},
+        handleFourthName(name4) {this.fourthNm = name4},
+        handleFifthName(name5) {this.fifthNm = name5},
+        handleSeixthName(name6) {this.sixthNm = name6},
+        handleSeventhName(name7) { this.seventhNm = name7},
+        handleEightName(name8) { this.eighthNm = name8},
+        handleNinthName(name9) { this.ninthNm = name9},
+        handleTenthName(name10) {this.tenthNm = name10},
+        handleEleventhName(name11) {this.eleventhNm = name11},
+
     }, 
 
     mounted() {
@@ -93,23 +73,9 @@ var app = new Vue({
         console.log(Object.values(this.chartData)[0])
 
         Object.values(this.chartData)[0] = this.firstInput;
-
     },
 
-    updated() {        
-        // Object.values(this.chartData)[0] = this.firstValue,
-        // console.log(this.firstInput),
-            // Object.values(this.chartData)[1] = secondValue;       
-            // Object.values(this.chartData)[2] = thirdValue;            
-            // Object.values(this.chartData)[3] = fourthValue;       
-            // Object.values(this.chartData)[4] = fifthValue;      
-            // Object.values(this.chartData)[5] = sixthValue;            
-            // Object.values(this.chartData)[6] = seventhValue;         
-            // Object.values(this.chartData)[7] = eighthValue;     
-            // Object.values(this.chartData)[8] = ninthValue;         
-            // Object.values(this.chartData)[9] = tenthValue;       
-            // Object.values(this.chartData)[10] = eleventhInput;
-
+    updated() {
             this.chartData= {
                 'Industrial': this.firstInput,
                 // console.log(app["Core AI"])
@@ -124,19 +90,15 @@ var app = new Vue({
                 'Students': this.tenthInput,
                 'AI publications': this.eleventhInput,   
             },
-            console.log(Object.values(this.chartData)[0])
+            Object.keys(this.chartData)[10] = this.eleventhNm;
 
             this.allCharts = document.getElementsByTagName("svg");
-            console.log(this.allCharts)
+            console.log(Object.keys(this.chartData)[0])
             
             if(this.allCharts.length =1) {
-                console.log("YAAAAAAY")
                 d3.select("svg").remove();
                 drawPolarChart(polarChartOptions, this.chartData);
-            }
-
-            
-        
+            }    
     }   
 })
 
