@@ -133,10 +133,7 @@ var app = new Vue({
                 console.log("YAAAAAAY")
                 d3.select("svg").remove();
                 drawPolarChart(polarChartOptions, this.chartData);
-            }
-
-            
-        
+            }   
     }   
 })
 
@@ -243,11 +240,6 @@ function drawPolarChart(options, appData) {
     }
 
     ////// CIRCLES ///////////////////////
-<<<<<<< HEAD
-    svg.selectAll(".x-circle")
-        //appending data to circles
-        .data(d3.range(0, options.levels + 2))
-=======
     var firstLevel = 0;
     var lastLevelIndex = options.levels;
     console.log(lastLevelIndex);
@@ -268,7 +260,6 @@ function drawPolarChart(options, appData) {
         //appending data to circles;
         //creating an array from 0 to the last level +2;
         .data(allCirclesLevels)
->>>>>>> 31579e93cda0d7c84775617da245bb60b57dacbf
         .enter()
         .append("circle")
         .attr("class", "x-circle")
@@ -285,8 +276,6 @@ function drawPolarChart(options, appData) {
         .attr("fill", "none")
         .attr("opacity", options.circlesOpacity)
 
-<<<<<<< HEAD
-=======
     //STYLING FIRST CIRCLES (not 0 which has radius = 0 and is not visible anyway, but 1, radius = (options.size / 2) / options.levels)
     var firstCircle = document.getElementById("x-circle-1");    
     firstCircle.setAttribute("stroke", "none")
@@ -303,7 +292,6 @@ function drawPolarChart(options, appData) {
         }
     }
 
->>>>>>> 31579e93cda0d7c84775617da245bb60b57dacbf
     ///////// LABELS //////////////////////////////////////////////
 
     // function that will create another arc to append text elements to it;
@@ -403,14 +391,7 @@ function drawPolarChart(options, appData) {
         axisTicks[i].setAttribute("display", "none")
     }
 
-<<<<<<< HEAD
-    // var whatever = document.querySelectorAll(".labels-container");
-    // console.log(whatever)
-
-    //STYLING AXIS LEGEND (NUMBERS)
-=======
     // STYLING AXIS NUMBERS
->>>>>>> 31579e93cda0d7c84775617da245bb60b57dacbf
     var ticksContainers = document.querySelectorAll(".tick");
     console.log(ticksContainers[0].childNodes[1])
 
