@@ -22,4 +22,8 @@ background color for text?
 turn upside down if on the bottom
 
 
+reverse the labels
+hover effect with 
+
+
 

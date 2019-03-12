@@ -1,17 +1,26 @@
 * {
     font-family: 'Muli', sans-serif;
 }
-body { 
+
+/* body { 
     background-color: lightgrey;
-}
+} */
+
 #app {
     display: grid;
     grid-template-columns: 30% 65%;
     grid-gap: 2.5%;
   }
-#app svg, #app #dashboard {
-    /* border: 1px solid grey; */
-    background-color: white;
+
+#dashboard {
+    height: 640px;
+    overflow-y: scroll;
+
+}
+
+#app svg,  {
+    border: 1px solid grey;
+    
 
 }
 
@@ -56,7 +65,35 @@ option:hover {
     margin: 1vw 0;
 }
 
-#new-dimension {
-    margin-bottom: 1vw;
-    
+.activate {
+    cursor: pointer;
+    opacity: 0.8;
+    transition-duration: 0.5s;
+    stroke: grey;
+}
+
+.deactivate {
+    opacity: 1;
+    transition-duration: 0.5s;
+}
+
+.some {
+    fill: red;
+}
+
+.active-title {
+    stroke: black;
+}
+
+.hide {
+    display: none;
+}
+
+.tooltip {
+    position: fixed;
+    top: 100;
+    left: 100;
+    background-color: aqua;
+    display: block;
+    z-index: 10;
 }

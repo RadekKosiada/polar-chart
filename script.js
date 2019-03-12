@@ -14,24 +14,138 @@ var app = new Vue({
             'Non-corp. RCs': 80,
             'Top unis': 60,
             'Students': 89,
-            'AI publications': 41
-        }
+            'AI publications': 41,   
+        },
+        firstInput: 80,
+        firstValue: 0,
+        secondInput: 25,
+        secondValue: 0,
+        thirdInput: 100,
+        thirdValue: 0,
+        fourthInput: 58,
+        fourthValue: 0,
+        fifthInput: 45,
+        fifthValue: 0,
+        sixthInput: 12,
+        sixthValue: 0,
+        seventhInput: 62,
+        seventhValue: 0,
+        eighthInput: 80,
+        eighthValue: 0,
+        ninthInput: 60,
+        ninthValue: 0,
+        tenthInput: 89,
+        tenthValue: 0,
+        eleventhInput: 41,
+        eleventhValue: 0,   
+
+    }, 
+    methods: {
+        handleFirstInput(firstValue) {
+            this.firstInput = firstValue;
+            // Object.values(this.chartData)[0] = firstValue;
+        },
+        handleSecondInput(secondValue) {
+            this.secondInput = secondValue;
+            // Object.values(this.chartData)[1] = secondValue;
+        },
+        handleThirdInput(thirdValue) {
+            this.thirdInput = thirdValue;
+            // Object.values(this.chartData)[2] = thirdValue;
+        },
+        handleFourthInput(fourthValue) {
+            this.fourthInput = fourthValue;
+            // Object.values(this.chartData)[3] = fourthValue;
+        },
+        handleFifthInput(fifthValue) {
+            this.fifthInput = fifthValue;
+            // Object.values(this.chartData)[4] = fifthValue;
+        },
+        handleSixthInput(sixthValue) {
+            this.sixthInput = sixthValue;
+            // Object.values(this.chartData)[5] = sixthValue;
+        },
+        handleSeventhInput(seventhValue) {
+            this.seventhInput = seventhValue;
+            // Object.values(this.chartData)[6] = seventhValue;
+        },
+        handleEighthInput(eighthValue) {
+            this.eighthInput = eighthValue;
+            // Object.values(this.chartData)[7] = eighthValue;
+        },
+        handleNinthInput(ninthValue) {
+            this.ninthInput = ninthValue;
+            // Object.values(this.chartData)[8] = ninthValue;
+        },
+        handleTenthInput(tenthValue) {
+            this.tenthInput = tenthValue;
+            // Object.values(this.chartData)[9] = tenthValue;
+        },
+        handleEleventhInput(eleventhValue) {
+            this.eleventhInput = eleventhValue;
+            // Object.values(this.chartData)[10] = eleventh;
+        },
+    }, 
+
+    mounted() {
+        console.log("", this.numberOfInputs)
+        console.log("chartData", this.chartData);
+        console.log(Object.values(this.chartData)[0])
+
+        Object.values(this.chartData)[0] = this.firstInput;
+
     },
-        mounted() {
-            console.log(this.numberOfInputs)
-            console.log(this.chartData)
-            console.log(Object.keys(this.chartData))     
-    }
-    
+
+    updated() {        
+        // Object.values(this.chartData)[0] = this.firstValue,
+        // console.log(this.firstInput),
+            // Object.values(this.chartData)[1] = secondValue;       
+            // Object.values(this.chartData)[2] = thirdValue;            
+            // Object.values(this.chartData)[3] = fourthValue;       
+            // Object.values(this.chartData)[4] = fifthValue;      
+            // Object.values(this.chartData)[5] = sixthValue;            
+            // Object.values(this.chartData)[6] = seventhValue;         
+            // Object.values(this.chartData)[7] = eighthValue;     
+            // Object.values(this.chartData)[8] = ninthValue;         
+            // Object.values(this.chartData)[9] = tenthValue;       
+            // Object.values(this.chartData)[10] = eleventhInput;
+
+            this.chartData= {
+                'Industrial': this.firstInput,
+                // console.log(app["Core AI"])
+                'Core AI': this.secondInput,
+                'VCs': this.thirdInput,
+                'CVCs': this.fourthInput,
+                'Acc/includ': this.fifthInput,
+                'Meetups': this.sixthInput,
+                'Corp. RCs': this.seventhInput,
+                'Non-corp. RCs': this.eighthInput,
+                'Top unis': this.ninthInput,
+                'Students': this.tenthInput,
+                'AI publications': this.eleventhInput,   
+            },
+            console.log(Object.values(this.chartData)[0])
+
+            this.allCharts = document.getElementsByTagName("svg");
+            console.log(this.allCharts)
+            
+            if(this.allCharts.length =1) {
+                console.log("YAAAAAAY")
+                d3.select("svg").remove();
+                drawPolarChart(polarChartOptions, this.chartData);
+            }
+
+            
+        
+    }   
 })
 
-console.log(app._data.chartData);
-console.log(Object.keys(app._data.chartData)) //labels
-console.log(Object.values(app._data.chartData)) // values
-console.log(Object.keys(app._data.chartData).length)
+// console.log(app._data.chartData);
+// console.log(Object.keys(app._data.chartData))
+// console.log(Object.keys(app._data.chartData).length)
 
 function drawPolarChart(options, appData) {
-    console.log(options, appData);
+    // console.log(options, appData);
     //creating an svg node
     var svg = d3.select("#chart")
         .append("svg")
@@ -46,8 +160,8 @@ function drawPolarChart(options, appData) {
     var nameOfBars = Object.keys(appData);
     var innerRadius = options.size / options.levels / 2;
     var outerRadius = 50;
-    console.log(outerRadius);
-    console.log(appData.CVCs)
+    // console.log(outerRadius);
+    // console.log(appData.CVCs)
 
     function returnsBarsIndex() {
         nameOfBars.forEach(function (elem, i) {
@@ -69,7 +183,6 @@ function drawPolarChart(options, appData) {
     }
 
     var barsLabels = getBarsLabels();
-    // console.log(barsLabels);
 
     //finding the highest bar hight for the scale; 
     var theHighestBar = Math.max(...barsHeights);
@@ -77,15 +190,19 @@ function drawPolarChart(options, appData) {
     ////// CHARTSCALE &  BARS /////////////////////////
 
     var chartScale  = d3.scaleLinear()
+        //passing data => min and max heights of the bars;
         .domain([0, theHighestBar])
+        //passing the size of chart => min and max of the chart; boundaries within the data will transformed;
         .range([0, options.size / 2]);
   
     //https://d3indepth.com/shapes/
+    //defining function that will create arcs/bars;
     var createBars = d3.arc()
         .innerRadius(innerRadius)
         .startAngle(function (d, i) { return (i * 2 * Math.PI) / numberOfBars; })
         .endAngle(function (d, i) { return ((i + 1) * 2 * Math.PI) / numberOfBars; })
-        .outerRadius(function (d, i) { return chartScale(d+(theHighestBar/options.levels)); })
+        // .outerRadius(function (d, i) { console.log(d); return chartScale(d+(theHighestBar/options.levels)); })
+        .outerRadius(function (d, i) { console.log(d); return chartScale(d); })
         .padAngle(options.padAngle)
         .padRadius(options.padRadius);
 
@@ -93,12 +210,11 @@ function drawPolarChart(options, appData) {
         .data(barsHeights)
         .enter()
         .append("path")
-        // .attr("fill", "grey")
-        // .attr("fill-opacity", "0.5")
         .attr("class", "bars")
         .attr("d", createBars)
         //adding margin*1 to x & y attributes to center the bars;
         .attr("transform", "translate(" + (options.size / 2 + options.margin )+ "," + (options.size / 2 + options.margin) + ")")
+
 
     //////// COLORS ///////////////////////////////////////////////
     var numColors = Object.keys(options.c).length;
@@ -125,16 +241,40 @@ function drawPolarChart(options, appData) {
             // console.log("3", counter);
         }        
     }
-   
+
     ////// CIRCLES ///////////////////////
+<<<<<<< HEAD
     svg.selectAll(".x-circle")
         //appending data to circles
         .data(d3.range(0, options.levels + 2))
+=======
+    var firstLevel = 0;
+    var lastLevelIndex = options.levels;
+    console.log(lastLevelIndex);
+    
+    //creating an array consisting of integers for every single circle;
+    function creatingAllCirclesArr() {
+        var allCirclesArr = [];
+        //adding 2 due to indexing from 0;
+        for(var i = 0; i < lastLevelIndex + 2; i++) {
+            allCirclesArr.push(i);
+        }
+        return allCirclesArr;
+    }
+    var allCirclesLevels = creatingAllCirclesArr();
+
+    // https://www.dashingd3js.com/svg-basic-shapes-and-d3js
+    svg.selectAll(".x-circle")
+        //appending data to circles;
+        //creating an array from 0 to the last level +2;
+        .data(allCirclesLevels)
+>>>>>>> 31579e93cda0d7c84775617da245bb60b57dacbf
         .enter()
         .append("circle")
         .attr("class", "x-circle")
+        .attr("id", function(d, i) { return "x-circle-" + i;})
         .attr("r", function (d, i) {
-            return (options.size / 2) / options.levels * d;
+            return (options.size / 2) / options.levels * i;
         })
         //adding margin*1 to center the circles;
         .attr("cx", options.size / 2 + options.margin)
@@ -145,22 +285,42 @@ function drawPolarChart(options, appData) {
         .attr("fill", "none")
         .attr("opacity", options.circlesOpacity)
 
+<<<<<<< HEAD
+=======
+    //STYLING FIRST CIRCLES (not 0 which has radius = 0 and is not visible anyway, but 1, radius = (options.size / 2) / options.levels)
+    var firstCircle = document.getElementById("x-circle-1");    
+    firstCircle.setAttribute("stroke", "none")
+
+    //HIDING EVERY SECOND CIRCLES IF THEIR NUMBER IS > 15;
+    var circles = document.querySelectorAll(".x-circle");
+
+    if(allCirclesLevels.length > 12) {
+        for(var i = 0; i < circles.length; i++) {
+            if (i%2) {
+                circles[i].setAttribute("display", "none");
+                // circles[circles.length-1].setAttribute("display", "block")
+            }
+        }
+    }
+
+>>>>>>> 31579e93cda0d7c84775617da245bb60b57dacbf
     ///////// LABELS //////////////////////////////////////////////
 
     // function that will create another arc to append text elements to it;
     var labelsArc = d3.arc()
-        .innerRadius(innerRadius * (options.levels+2))
-        .outerRadius(innerRadius * (options.levels+1))
+        .innerRadius(innerRadius * (options.levels+1))
+        .outerRadius(innerRadius * (options.levels+2))
         .startAngle(function (d, i) { return (i * 2 * Math.PI) / numberOfBars; })
         .endAngle(function (d, i) { return ((i + 1) * 2 * Math.PI) / numberOfBars; })
 
-    // https://www.visualcinnamon.com/2015/09/placing-text-on-arcs.html
+    // http://bl.ocks.org/nbremer/bf6d15082ea81ce69b55
     //creating another arc => anchor for labels;
     var labelsContainers = svg.selectAll(".labels-arc")
-        .data(barsHeights)
+        .data(barsLabels)
         .enter()
         .append("path")
         .attr("class", "labels-container")
+        //id will be the anchor fot the texPath later;
         .attr("id", function (d, i) { return "label-arc-" + i; })
         // .attr("id", "labels-arc-id")
         .attr("transform", "translate(" + (options.size / 2 + options.margin )+ "," + (options.size / 2 + options.margin) + ")")
@@ -174,51 +334,59 @@ function drawPolarChart(options, appData) {
         //needs to be centered: endAngle - startAngle/2 * half of the string in pixels          
         .attr("x", 80)
         .attr("dy", 15)
+        //appending "textpath" to "text"
         .append("textPath") 
-        .attr("font-size", options.labelFontSize)
+        .attr("font-size", options.labelFontSize)        
         //! 
         .attr("xlink:href", function (d, i) { return "#label-arc-" + i; })
         .attr("fill", options.c.grey)
         .attr("text-anchor", "beginning")
         .text(function (d, i) { return d; })
 
-        //defining an array of all labels
+        //defining an array of all labels;
+        // console.log(document.getElementsByClassName("text-labels"))
         var labelsArray = labels._groups[0];
+        //defining an array of all paths = containers of labels;
+        var labelsContainersArr = labelsContainers._groups[0];
+        // console.log("labels", labelsArray);
+        // console.log("ALL", labelsContainersArr);
+
+        //Test for rotating the labelss
+        // labelsArray[0].style.transform = "scale(+1, -1)";
+        // labelsContainersArr[0].style.transform = "scale(+1, -1)";
       
         labelsArray.forEach(function(elem) {
             // console.log((elem.getComputedTextLength()));
             elem.setAttribute("x", (Math.PI*2/barsLabels.length/2 + elem.getComputedTextLength()/2))
-    
+            // elem.style.transform ="rotate(180deg)";
+            // console.log(elem)
         })
     /// AXIS /////////////////////////////////
 
     // https://www.dashingd3js.com/d3js-axes
-    var axisScale = d3.scaleLinear()
+    var chartScaleReversed = d3.scaleLinear()
         //heights of the bars
         .domain([0, theHighestBar])
         //size of svg
         .range([0, -options.size / 2]);
 
     var yAxis = d3.axisLeft()
-        .scale(axisScale)
-    //https://github.com/d3/d3-axis
+        .scale(chartScaleReversed)
 
     var yAxisReverse = d3.axisLeft()
     //using chartScale defined before for bars;
         .scale(chartScale)
-    //https://github.com/d3/d3-axis
+    // for ticks https://github.com/d3/d3-axis
     // .ticks()
 
     var yAxisGroup = svg.append("g")
         .attr("class", "y-axis-container")
-        .attr("transform", "translate(" + (options.size / 2 + options.margin )+ "," + (options.size / 2 + options.margin) + ")")
         //substracting innerRadius from y attribute to move axis upwards;
         .attr("transform", "translate(" + (options.size / 2 + options.margin ) + "," + (options.size / 2 + options.margin - innerRadius) + ")")
         .call(yAxis);
 
     var yAxisGroupReverse = svg.append("g")
     .attr("class", "y-axis-container")   
-    .attr("transform", "translate(" + (options.size / 2 + options.margin )+ "," + (options.size / 2 + options.margin) + ")")
      //adding innerRadius from y attribute to move axis downwards;
     .attr("transform", "translate(" + (options.size / 2 + options.margin ) + "," + (options.size / 2 + options.margin + innerRadius) + ")")
     .call(yAxisReverse);
@@ -226,7 +394,7 @@ function drawPolarChart(options, appData) {
     //STYLING AXIS 
     var axisNodes = document.getElementsByClassName("domain")
     for(var i = 0; i < axisNodes.length; i++) {
-        axisNodes[i].setAttribute("stroke", "none")
+        axisNodes[i].setAttribute("display", "none")
     }
 
     //STYLING AXIS TICKS
@@ -235,10 +403,14 @@ function drawPolarChart(options, appData) {
         axisTicks[i].setAttribute("display", "none")
     }
 
+<<<<<<< HEAD
     // var whatever = document.querySelectorAll(".labels-container");
     // console.log(whatever)
 
     //STYLING AXIS LEGEND (NUMBERS)
+=======
+    // STYLING AXIS NUMBERS
+>>>>>>> 31579e93cda0d7c84775617da245bb60b57dacbf
     var ticksContainers = document.querySelectorAll(".tick");
     console.log(ticksContainers[0].childNodes[1])
 
@@ -252,7 +424,6 @@ function drawPolarChart(options, appData) {
         ticksContainers[0].childNodes[1].setAttribute("display", "none");
         ticksContainers[0+ticksContainers.length/2].childNodes[1].setAttribute("display", "none");
     }
- 
 }
 
 //defining margin of svg;
@@ -261,13 +432,13 @@ var margin = 80;
 // for easy access, if need to change;
 // will be passed to function that draws the chart together with data;
 
-
 function getBarsHeight(data) {
     var heightsArr = [];
     for (var key in data) {
         // console.log("VaLUES:", appData[key])
         // I am adding here innerRadius, 
         //as the bars start from it and not 0 (middle of the svg);
+        // heightsArr.push(data[key])
         heightsArr.push(data[key])
     }
     return heightsArr;
@@ -276,7 +447,7 @@ function getBarsHeight(data) {
 var barsHeights = getBarsHeight(app._data.chartData);
 var theHighestBar = Math.max(...barsHeights);
 
-var polarChartOptions = {
+ polarChartOptions = {
     margin: margin,
     // size will work for both width and height;
     //adding margin to the size;
@@ -290,6 +461,8 @@ var polarChartOptions = {
     padRadius: 20, //defines the linear distance between the bars; 
     legendOpacity: 0.8,
     circlesOpacity: 0.5,
+    //to make font more flexible I could write an function counting it and passing to the object;
+    //i.e. options.size/40;
     legendFontSize: 10,
     labelFontSize: 10,
     c: {
@@ -304,3 +477,46 @@ var polarChartOptions = {
 }
 
 drawPolarChart(polarChartOptions, app._data.chartData);
+
+// MOUSE EFFECTS
+var barsArray = document.getElementsByClassName("bars");
+// console.log(barsArray)
+labelsArray = document.querySelectorAll("textpath");
+// console.log(labelsArray)
+
+function animateBars() {
+    for(var i = 0; i < barsArray.length; i++) {       
+            barsArray[i].addEventListener("mouseover", mouseOverBar.bind(barsArray[i], i ));
+            barsArray[i].addEventListener("mouseout", mouseOutBar.bind(barsArray[i], i));         
+    }
+}
+animateBars();
+
+var toolTip = document.querySelector(".tooltip");
+
+function mouseOverBar(index, event) {
+    console.log("!!!!!!", arguments[1], )
+    //this = barsArray[i]; as event listener is added to the bar;
+    this.classList.add("activate")     
+    labelsArray[index].classList.add("active-title")
+    // barsHeights[index]
+    toolTip.innerHTML="Value: " + barsHeights[index];
+    toolTip.classList.remove("hide");
+
+    //event.clientY
+    //event.clientX
+
+
+
+
+}
+
+function mouseOutBar(index) {
+    this.classList.remove("activate")
+    labelsArray[index].classList.remove("active-title")
+    toolTip.innerHTML= "";
+    toolTip.classList.add("hide");
+}
+
+
+
