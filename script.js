@@ -14,17 +14,100 @@ var app = new Vue({
             'Non-corp. RCs': 80,
             'Top unis': 60,
             'Students': 89,
-            'AI publications': 41,
-        }
-    }
+            'AI publications': 41,   
+        },
+        firstInput: 80,
+        secondInput: 25,        
+        thirdInput: 100,       
+        fourthInput: 58,        
+        fifthInput: 45,        
+        sixthInput: 12,     
+        seventhInput: 62,  
+        eighthInput: 80,        
+        ninthInput: 60,    
+        tenthInput: 89,       
+        eleventhInput: 41,
+        firstNm: 'Industrial',
+        secondNm: 'Core AI',
+        thirdNm: 'VCs', 
+        fourthNm: 'CVCs',
+        fifthNm: 'Acc/includ',
+        sixthNm: 'Meetups',
+        seventhNm: 'Corp. RCs',
+        eighthNm: 'Non-corp. RCs',
+        ninthNm: 'Top unis',
+        tenthNm: 'Students',
+        eleventhNm: 'AI publications'
+
+    }, 
+    methods: {
+        handleFirstInput(firstValue) {this.firstInput = firstValue; },
+        handleSecondInput(secondValue) {this.secondInput = secondValue;},
+        handleThirdInput(thirdValue) {this.thirdInput = thirdValue;},
+        handleFourthInput(fourthValue) {this.fourthInput = fourthValue;},
+        handleFifthInput(fifthValue) { this.fifthInput = fifthValue; },
+        handleSixthInput(sixthValue) {this.sixthInput = sixthValue; },
+        handleSeventhInput(seventhValue) { this.seventhInput = seventhValue; },
+        handleEighthInput(eighthValue) { this.eighthInput = eighthValue; },
+        handleNinthInput(ninthValue) { this.ninthInput = ninthValue; },
+        handleTenthInput(tenthValue) {this.tenthInput = tenthValue; },
+        handleEleventhInput(eleventhValue) {this.eleventhInput = eleventhValue; },
+
+        handleFirstName(name1) {this.firstNm = name1},
+        handleSecondName(name2) {this.secondNm = name2},
+        handleThirdName(name3) {this.thirdNm = name3},
+        handleFourthName(name4) {this.fourthNm = name4},
+        handleFifthName(name5) {this.fifthNm = name5},
+        handleSeixthName(name6) {this.sixthNm = name6},
+        handleSeventhName(name7) { this.seventhNm = name7},
+        handleEightName(name8) { this.eighthNm = name8},
+        handleNinthName(name9) { this.ninthNm = name9},
+        handleTenthName(name10) {this.tenthNm = name10},
+        handleEleventhName(name11) {this.eleventhNm = name11},
+
+    }, 
+
+    mounted() {
+        console.log("", this.numberOfInputs)
+        console.log("chartData", this.chartData);
+        console.log(Object.values(this.chartData)[0])
+
+        Object.values(this.chartData)[0] = this.firstInput;
+    },
+
+    updated() {
+            this.chartData= {
+                'Industrial': this.firstInput,
+                // console.log(app["Core AI"])
+                'Core AI': this.secondInput,
+                'VCs': this.thirdInput,
+                'CVCs': this.fourthInput,
+                'Acc/includ': this.fifthInput,
+                'Meetups': this.sixthInput,
+                'Corp. RCs': this.seventhInput,
+                'Non-corp. RCs': this.eighthInput,
+                'Top unis': this.ninthInput,
+                'Students': this.tenthInput,
+                'AI publications': this.eleventhInput,   
+            },
+            Object.keys(this.chartData)[10] = this.eleventhNm;
+
+            this.allCharts = document.getElementsByTagName("svg");
+            console.log(Object.keys(this.chartData)[0])
+            
+            if(this.allCharts.length =1) {
+                d3.select("svg").remove();
+                drawPolarChart(polarChartOptions, this.chartData);
+            }    
+    }   
 })
 
-console.log(app._data.chartData);
-console.log(Object.keys(app._data.chartData))
-console.log(Object.keys(app._data.chartData).length)
+// console.log(app._data.chartData);
+// console.log(Object.keys(app._data.chartData))
+// console.log(Object.keys(app._data.chartData).length)
 
 function drawPolarChart(options, appData) {
-    console.log(options, appData);
+    // console.log(options, appData);
     //creating an svg node
     var svg = d3.select("#chart")
         .append("svg")
@@ -73,7 +156,8 @@ function drawPolarChart(options, appData) {
         .innerRadius(innerRadius)
         .startAngle(function (d, i) { return i * (2 * Math.PI / numberOfBars) })
         .endAngle(function (d, i) { return ((i + 1) * 2 * Math.PI) / numberOfBars; })
-        .outerRadius(function (d, i) { return chartScale(d+(theHighestBar/options.levels)); })
+        // .outerRadius(function (d, i) { console.log(d); return chartScale(d+(theHighestBar/options.levels)); })
+        .outerRadius(function (d, i) { console.log(d); return chartScale(d); })
         .padAngle(options.padAngle)
         .padRadius(options.padRadius);
 
@@ -206,12 +290,12 @@ function drawPolarChart(options, appData) {
         .text(function (d, i) { return d; })
 
         //defining an array of all labels;
-        console.log(document.getElementsByClassName("text-labels"))
+        // console.log(document.getElementsByClassName("text-labels"))
         var labelsArray = labels._groups[0];
         //defining an array of all paths = containers of labels;
         var labelsContainersArr = labelsContainers._groups[0];
-        console.log("labels", labelsArray);
-        console.log("ALL", labelsContainersArr);
+        // console.log("labels", labelsArray);
+        // console.log("ALL", labelsContainersArr);
 
         //Test for rotating the labelss
         // labelsArray[0].style.transform = "scale(+1, -1)";
@@ -290,6 +374,7 @@ function getBarsHeight(data) {
         // console.log("VaLUES:", appData[key])
         // I am adding here innerRadius, 
         //as the bars start from it and not 0 (middle of the svg);
+        // heightsArr.push(data[key])
         heightsArr.push(data[key])
     }
     return heightsArr;
