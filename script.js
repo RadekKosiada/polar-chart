@@ -155,8 +155,7 @@ function drawPolarChart(options, appData) {
         .innerRadius(innerRadius)
         .startAngle(function (d, i) { return i * (2 * Math.PI / numberOfBars) })
         .endAngle(function (d, i) { return ((i + 1) * 2 * Math.PI) / numberOfBars; })
-        // .outerRadius(function (d, i) { console.log(d); return chartScale(d+(theHighestBar/options.levels)); })
-        .outerRadius(function (d, i) { console.log(typeof d); return chartScale(d+(theHighestBar/options.levels)); })
+        .outerRadius(function (d, i) { return chartScale(d+(theHighestBar/options.levels)); })
         .padAngle(options.padAngle)
         .padRadius(options.padRadius);
 
@@ -236,7 +235,7 @@ function drawPolarChart(options, appData) {
     var firstCircle = document.getElementById("x-circle-1");    
     firstCircle.setAttribute("stroke", "none")
 
-    //HIDING EVERY SECOND CIRCLES IF THEIR NUMBER IS > 15;
+    //HIDING EVERY SECOND CIRCLE IF THEIR NUMBER IS > 15;
     var circles = document.querySelectorAll(".x-circle");
 
     if(allCirclesLevels.length > 12) {
@@ -275,7 +274,7 @@ function drawPolarChart(options, appData) {
         .data(barsLabels)
         .enter().append("text")
         .attr("class", "text-labels")  
-        //needs to be centered: endAngle - startAngle/2 * half of the string in pixels          
+        //needs to be centered: endAngle - startAngle/2 * half of the string in pixels?         
         .attr("x", 80)
         .attr("dy", 15)
         //appending "textpath" to "text"
