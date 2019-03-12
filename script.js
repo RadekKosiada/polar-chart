@@ -93,6 +93,7 @@ function drawPolarChart(options, appData) {
         //adding margin*1 to x & y attributes to center the bars;
         .attr("transform", "translate(" + (options.size / 2 + options.margin )+ "," + (options.size / 2 + options.margin) + ")")
 
+
     //////// COLORS ///////////////////////////////////////////////
     var numColors = Object.keys(options.c).length;
     var barsArr = document.getElementsByClassName("bars")
@@ -345,28 +346,37 @@ labelsArray = document.querySelectorAll("textpath");
 console.log(labelsArray)
 
 function animateBars() {
-    for(var i = 0; i < barsArray.length; i++) {
-       
-            barsArray[i].addEventListener("mouseover", mouseOverBar.bind(barsArray[i], labelsArray[i] ));
-            barsArray[i].addEventListener("mouseout", mouseOutBar.bind(barsArray[i], labelsArray[i]));
-        
-               
+    for(var i = 0; i < barsArray.length; i++) {       
+            barsArray[i].addEventListener("mouseover", mouseOverBar.bind(barsArray[i], i ));
+            barsArray[i].addEventListener("mouseout", mouseOutBar.bind(barsArray[i], i));         
     }
 }
 animateBars();
 
-function mouseOverBar(label) {
-    console.log("!!!!!!", arguments)
+var toolTip = document.querySelector(".tooltip");
+
+function mouseOverBar(index, event) {
+    console.log("!!!!!!", arguments[1], )
     //this = barsArray[i]; as event listener is added to the bar;
     this.classList.add("activate")     
-    label.classList.add("active-title")
+    labelsArray[index].classList.add("active-title")
+    // barsHeights[index]
+    toolTip.innerHTML="Value: " + barsHeights[index];
+    toolTip.classList.remove("hide");
+
+    //event.clientY
+    //event.clientX
+
+
 
 
 }
 
-function mouseOutBar(label) {
+function mouseOutBar(index) {
     this.classList.remove("activate")
-    label.classList.remove("active-title")
+    labelsArray[index].classList.remove("active-title")
+    toolTip.innerHTML= "";
+    toolTip.classList.add("hide");
 }
 
 

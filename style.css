@@ -72,3 +72,16 @@ option:hover {
 .active-title {
     stroke: black;
 }
+
+.hide {
+    display: none;
+}
+
+.tooltip {
+    position: fixed;
+    top: 100;
+    left: 100;
+    background-color: aqua;
+    display: block;
+    z-index: 10;
+}
