@@ -283,9 +283,6 @@ function drawPolarChart(options, appData) {
 
 //defining margin of svg;
 var margin = 80;
-// storing all the options of the chart in an object;
-// for easy access, if need to change;
-// will be passed to function that draws the chart together with data;
 
 function getBarsHeight(data) {
     var heightsArr = [];
@@ -301,11 +298,15 @@ function getBarsHeight(data) {
 var barsHeights = getBarsHeight(app._data.chartData);
 var theHighestBar = Math.max(...barsHeights);
 
+// storing all the options of the chart in an object;
+// for easy access, if need to change;
+// will be passed to function that draws the chart together with data;
+
 var polarChartOptions = {
     margin: margin,
     // size will work for both width and height;
     //adding margin to the size;
-    size: 423 + margin,
+    size: 400 + margin,
     //how many x-circles there will be
     //the number of levels will adjust to the height highest Bar
     levels: Math.round(theHighestBar/10),
