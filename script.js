@@ -1,112 +1,14 @@
-var app = new Vue({
-    el: '#app',
-    data: {
-        numberOfInputs: 11,
-        chartData: {
-            'Industrial': 80,
-            // console.log(app["Core AI"])
-            'Core AI': 25,
-            'VCs': 100,
-            'CVCs': 58,
-            'Acc/includ': 45,
-            'Meetups': 12,
-            'Corp. RCs': 62,
-            'Non-corp. RCs': 80,
-            'Top unis': 60,
-            'Students': 89,
-            'AI publications': 41,   
-        },
-        firstInput: 80,
-        secondInput: 25,        
-        thirdInput: 100,       
-        fourthInput: 58,        
-        fifthInput: 45,        
-        sixthInput: 12,     
-        seventhInput: 62,  
-        eighthInput: 80,        
-        ninthInput: 60,    
-        tenthInput: 89,       
-        eleventhInput: 41,
-        firstNm: 'Industrial',
-        secondNm: 'Core AI',
-        thirdNm: 'VCs', 
-        fourthNm: 'CVCs',
-        fifthNm: 'Acc/includ',
-        sixthNm: 'Meetups',
-        seventhNm: 'Corp. RCs',
-        eighthNm: 'Non-corp. RCs',
-        ninthNm: 'Top unis',
-        tenthNm: 'Students',
-        eleventhNm: 'AI publications'
-
-    }, 
-    methods: {
-        handleFirstInput(firstValue) {this.firstInput = firstValue; },
-        handleSecondInput(secondValue) {this.secondInput = secondValue;},
-        handleThirdInput(thirdValue) {this.thirdInput = thirdValue;},
-        handleFourthInput(fourthValue) {this.fourthInput = fourthValue;},
-        handleFifthInput(fifthValue) { this.fifthInput = fifthValue; },
-        handleSixthInput(sixthValue) {this.sixthInput = sixthValue; },
-        handleSeventhInput(seventhValue) { this.seventhInput = seventhValue; },
-        handleEighthInput(eighthValue) { this.eighthInput = eighthValue; },
-        handleNinthInput(ninthValue) { this.ninthInput = ninthValue; },
-        handleTenthInput(tenthValue) {this.tenthInput = tenthValue; },
-        handleEleventhInput(eleventhValue) {this.eleventhInput = eleventhValue; },
-
-        handleFirstName(name1) {this.firstNm = name1},
-        handleSecondName(name2) {this.secondNm = name2},
-        handleThirdName(name3) {this.thirdNm = name3},
-        handleFourthName(name4) {this.fourthNm = name4},
-        handleFifthName(name5) {this.fifthNm = name5},
-        handleSixthName(name6) {this.sixthNm = name6},
-        handleSeventhName(name7) { this.seventhNm = name7},
-        handleEightName(name8) { this.eighthNm = name8},
-        handleNinthName(name9) { this.ninthNm = name9},
-        handleTenthName(name10) {this.tenthNm = name10},
-        handleEleventhName(name11) {this.eleventhNm = name11},
-
-    }, 
-
-    mounted() {
-        console.log("", this.numberOfInputs)
-        console.log("chartData", this.chartData);
-        console.log(Object.values(this.chartData)[0])
-
-        Object.values(this.chartData)[0] = this.firstInput;
-    },
-
-    updated() {
-            this.chartData= {
-                'Industrial': Number(this.firstInput),
-                'Core AI': Number(this.secondInput),
-                'VCs': Number(this.thirdInput),
-                'CVCs': Number(this.fourthInput),
-                'Acc/includ': Number(this.fifthInput),
-                'Meetups': Number(this.sixthInput),
-                'Corp. RCs': Number(this.seventhInput),
-                'Non-corp. RCs': Number(this.eighthInput),
-                'Top unis': Number(this.ninthInput),
-                'Students': Number(this.tenthInput),
-                'AI publications': Number(this.eleventhInput),   
-            },
-            Object.keys(this.chartData)[10] = this.eleventhNm;
-
-            this.allCharts = document.getElementsByTagName("svg");
-            console.log(Object.keys(this.chartData)[0])
-            
-            if(this.allCharts.length =1) {
-                d3.select("svg").remove();
-                drawPolarChart(polarChartOptions, this.chartData);
-            }    
-    }   
-})
-
-// console.log(app._data.chartData);
-// console.log(Object.keys(app._data.chartData))
-// console.log(Object.keys(app._data.chartData).length)
+var chartData = {
+    'Africa': 121.6,
+    'Asia': 458.2,
+    'Oceania': 3.8,
+    'South America': 42.2,
+    'North America': 57.9,
+    'Europe': 73.9,
+    // 'Antarctica':1.1
+};
 
 function drawPolarChart(options, appData) {
-    // console.log(options, appData);
     //creating an svg node
     var svg = d3.select("#chart")
         .append("svg")
@@ -123,7 +25,6 @@ function drawPolarChart(options, appData) {
     // var outerRadius = 50;
 
     var barsHeights = getBarsHeight(appData);
-    console.log(barsHeights);
 
     function getBarsLabels() {
         var labelsArr = [];
@@ -178,20 +79,16 @@ function drawPolarChart(options, appData) {
     for(var i = 0; i < barsArr.length; i++) {
         if(i < 2) {
             counter++;
-            barsArr[i].setAttribute("fill", options.c.orange);
-            // console.log("0", counter);
+            barsArr[i].setAttribute("fill", options.c.yellow);
         } else if (i < 4) {
             counter++;
-            barsArr[i].setAttribute("fill", options.c.green);    
-            // console.log("1", counter);        
+            barsArr[i].setAttribute("fill", options.c.green);           
         } else if(i<8) {
             counter++;
-            barsArr[i].setAttribute("fill", options.c.blue);  
-            // console.log("2", counter);          
+            barsArr[i].setAttribute("fill", options.c.blue);         
         } else {
             counter++;
-            barsArr[i].setAttribute("fill", options.c.purple);
-            // console.log("3", counter);
+            barsArr[i].setAttribute("fill", options.c.red);
         }        
     }
 
@@ -265,7 +162,6 @@ function drawPolarChart(options, appData) {
         .attr("class", "labels-container")
         //id will be the anchor fot the texPath later;
         .attr("id", function (d, i) { return "label-arc-" + i; })
-        // .attr("id", "labels-arc-id")
         .attr("transform", "translate(" + (options.size / 2 + options.margin )+ "," + (options.size / 2 + options.margin) + ")")
         .attr("fill", "none")
         .attr("d", labelsArc);
@@ -291,18 +187,13 @@ function drawPolarChart(options, appData) {
         var labelsArray = labels._groups[0];
         //defining an array of all paths = containers of labels;
         var labelsContainersArr = labelsContainers._groups[0];
-        // console.log("labels", labelsArray);
-        // console.log("ALL", labelsContainersArr);
 
-        //Test for rotating the labelss
+        //Test for rotating the labels
         // labelsArray[0].style.transform = "scale(+1, -1)";
         // labelsContainersArr[0].style.transform = "scale(+1, -1)";
       
         labelsArray.forEach(function(elem) {
-            // console.log((elem.getComputedTextLength()));
             elem.setAttribute("x", (Math.PI*2/barsLabels.length/2 + elem.getComputedTextLength()/2))
-            // elem.style.transform ="rotate(180deg)";
-            // console.log(elem)
         })
     /// AXIS /////////////////////////////////
 
@@ -376,7 +267,7 @@ function getBarsHeight(data) {
     return heightsArr;
 }
 
-var barsHeights = getBarsHeight(app._data.chartData);
+var barsHeights = getBarsHeight(chartData);
 var theHighestBar = Math.max(...barsHeights);
 
 // storing all the options of the chart in an object;
@@ -403,16 +294,17 @@ var polarChartOptions = {
     labelFontSize: 10,
     c: {
         black: "black",
-        grey: "rgb(142, 154, 175)",
-        orange: "rgb(255, 96, 17)",
-        green: "rgb(151, 216, 157)",
-        blue: "rgb(51, 140, 204)", 
-        darkblue: "rgb(41, 47, 104)",
-        purple: "rgb(162, 136, 227)"
+        grey: "grey",
+        yellow: "orange",
+        green: "green",
+        blue: "blue", 
+        darkblue: "darkblue",
+        red: "red"
     }
 }
 
-drawPolarChart(polarChartOptions, app._data.chartData);
+//calling function to draw chart
+drawPolarChart(polarChartOptions, chartData);
 
 // MOUSE EFFECTS
 var barsArray = document.getElementsByClassName("bars");
@@ -429,19 +321,12 @@ animateBars();
 var toolTip = document.querySelector(".tooltip");
 
 function mouseOverBar(index, event) {
-    // console.log("!!!!!!", arguments[1], )
     //this = barsArray[i]; as event listener is added to the bar;
     this.classList.add("activate")     
     labelsArray[index].classList.add("active-title")
     // barsHeights[index]
     toolTip.innerHTML="Value: " + barsHeights[index];
     toolTip.classList.remove("hide");
-
-    //event.clientY
-    //event.clientX
-
-
-
 
 }
 
