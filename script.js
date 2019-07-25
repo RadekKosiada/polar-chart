@@ -1,3 +1,17 @@
+var inputVue = new Vue({
+    el: "#input-vue",
+    data: {
+        fields: [
+            {label: 'Industrial', value: 80},
+            {label: 'Core AI',  value:25},
+            {label: 'VCs',  value: 75},
+            {label: 'CVCs',  value: 58},
+            {label: 'Acc/includ',  value: 45}
+        ]
+            
+    }
+});
+
 var app = new Vue({
     el: '#app',
     data: {
