@@ -4,40 +4,22 @@ var app = new Vue({
         numberOfInputs: 11,
         chartData: {
             'Industrial': 80,
-            // console.log(app["Core AI"])
             'Core AI': 25,
-            'VCs': 100,
+            'VCs': 75 ,
             'CVCs': 58,
-            'Acc/includ': 45,
-            'Meetups': 12,
-            'Corp. RCs': 62,
-            'Non-corp. RCs': 80,
-            'Top unis': 60,
-            'Students': 89,
-            'AI publications': 41,   
+            'Acc/includ': 45
         },
         firstInput: 80,
         secondInput: 25,        
-        thirdInput: 100,       
+        thirdInput: 75,       
         fourthInput: 58,        
-        fifthInput: 45,        
-        sixthInput: 12,     
-        seventhInput: 62,  
-        eighthInput: 80,        
-        ninthInput: 60,    
-        tenthInput: 89,       
-        eleventhInput: 41,
+        fifthInput: 45,       
+        
         firstNm: 'Industrial',
         secondNm: 'Core AI',
         thirdNm: 'VCs', 
         fourthNm: 'CVCs',
         fifthNm: 'Acc/includ',
-        sixthNm: 'Meetups',
-        seventhNm: 'Corp. RCs',
-        eighthNm: 'Non-corp. RCs',
-        ninthNm: 'Top unis',
-        tenthNm: 'Students',
-        eleventhNm: 'AI publications'
 
     }, 
     methods: {
@@ -46,25 +28,13 @@ var app = new Vue({
         handleThirdInput(thirdValue) {this.thirdInput = thirdValue;},
         handleFourthInput(fourthValue) {this.fourthInput = fourthValue;},
         handleFifthInput(fifthValue) { this.fifthInput = fifthValue; },
-        handleSixthInput(sixthValue) {this.sixthInput = sixthValue; },
-        handleSeventhInput(seventhValue) { this.seventhInput = seventhValue; },
-        handleEighthInput(eighthValue) { this.eighthInput = eighthValue; },
-        handleNinthInput(ninthValue) { this.ninthInput = ninthValue; },
-        handleTenthInput(tenthValue) {this.tenthInput = tenthValue; },
-        handleEleventhInput(eleventhValue) {this.eleventhInput = eleventhValue; },
-
+        
         handleFirstName(name1) {this.firstNm = name1},
         handleSecondName(name2) {this.secondNm = name2},
         handleThirdName(name3) {this.thirdNm = name3},
         handleFourthName(name4) {this.fourthNm = name4},
         handleFifthName(name5) {this.fifthNm = name5},
-        handleSixthName(name6) {this.sixthNm = name6},
-        handleSeventhName(name7) { this.seventhNm = name7},
-        handleEightName(name8) { this.eighthNm = name8},
-        handleNinthName(name9) { this.ninthNm = name9},
-        handleTenthName(name10) {this.tenthNm = name10},
-        handleEleventhName(name11) {this.eleventhNm = name11},
-
+       
     }, 
 
     mounted() {
@@ -82,12 +52,6 @@ var app = new Vue({
                 'VCs': Number(this.thirdInput),
                 'CVCs': Number(this.fourthInput),
                 'Acc/includ': Number(this.fifthInput),
-                'Meetups': Number(this.sixthInput),
-                'Corp. RCs': Number(this.seventhInput),
-                'Non-corp. RCs': Number(this.eighthInput),
-                'Top unis': Number(this.ninthInput),
-                'Students': Number(this.tenthInput),
-                'AI publications': Number(this.eleventhInput),   
             },
             Object.keys(this.chartData)[10] = this.eleventhNm;
 

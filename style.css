@@ -1,45 +1,30 @@
 * {
-    font-family: 'Muli', sans-serif;
+    font-family:  sans-serif;
 }
-
-/* body { 
-    background-color: lightgrey;
-} */
 
 #app {
-    display: grid;
-    grid-template-columns: 30% 65%;
-    grid-gap: 2.5%;
-  }
-
-#dashboard {
+    display: inline-block;
     height: 640px;
     overflow-y: scroll;
-
 }
 
-#app svg,  {
-    /* border: 1px solid grey; */
-}
-
-.polar-chart, svg {
+.container {
     border: 1px solid grey;
+    padding: 0 1vw; 
 }
 
-#chart{
+#chart{    
+    display: inline-block;
+    border: 1px solid grey;
     text-align: center;
-    /* margin-left: 300px; */
 }
 
-.text-labels{
-    stroke: none;
-    fill: black;
+
+.polar-chart {
+    vertical-align: 0;
 }
 
-#dashboard {
-    height: 640px;
-  overflow-y: scroll;
-}
+/* HOVER EFFECTS */
 
 select {
     cursor: pointer;
@@ -57,12 +42,6 @@ option:hover {
     box-shadow: 0 0 10px 100px #000 inset; 
 }
 
-.container {
-    border: 1px solid grey;
-    padding: 0 1vw;
-    margin: 1vw 0;
-}
-
 .activate {
     cursor: pointer;
     opacity: 0.8;
@@ -75,9 +54,6 @@ option:hover {
     transition-duration: 0.5s;
 }
 
-.some {
-    fill: red;
-}
 
 .active-title {
     stroke: black;
@@ -86,12 +62,12 @@ option:hover {
 .hide {
     display: none;
 }
-
+/* 
 .tooltip {
-    position: fixed;
+    position: relative;
     top: 100;
     left: 100;
     background-color: aqua;
     display: block;
     z-index: 10;
-}
+} */
