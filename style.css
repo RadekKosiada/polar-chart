@@ -71,3 +71,10 @@ option:hover {
     display: block;
     z-index: 10;
 } */
+
+
+/* NEW INPUTS */
+
+.single-input {
+    margin: 20px;
+}

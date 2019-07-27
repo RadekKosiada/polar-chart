@@ -18,12 +18,12 @@
 
 <body>
     <div id="input-vue">
-            <div v-for="field in fields">
-                    <span>{{ field.label }}: </span>
-                    <span>{{ field.value }} </spann>
-            </div>
-        
-        
+        <div class="single-input" v-for="field, index in fields">
+            <input type="text" id="name" v-bind:id=index v-model="field.label"><br>
+            <input type="number" v-bind:id=index v-model.number="field.rate" @input="updateRate">
+        </div>
+
+
     </div>
 
     <div id="app">
@@ -122,8 +122,8 @@
 
     </div>
 
-     <!-- POLAR CHART -->
-     <div id="chart">
+    <!-- POLAR CHART -->
+    <div id="chart">
     </div>
     <!-- BOOTSTRAP -->
     <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js"
