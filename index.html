@@ -20,7 +20,7 @@
     <div id="input-vue">
         <div class="single-input" v-for="field, index in fields">
             <input type="text" id="name" v-bind:id=index v-model="field.label"><br>
-            <input type="number" v-bind:id=index v-model.number="field.rate" @input="updateRate">
+            <input type="number" v-bind:id=index v-model.number="field.rate">
         </div>
     </div>
 

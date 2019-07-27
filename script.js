@@ -12,10 +12,6 @@ var inputVue = new Vue({
         ]
     },
     methods: {
-        updateRate(e) {
-            // this.value = e.target.value;
-            console.log(e.target.getAttribute("id"), this.fields[0].rate, this.fields.length);
-        },
         updateData() {
             for (let i = 0; i < this.fields.length; i++) {
                 this.chartData2[this.fields[i].label] = this.fields[i].rate;
@@ -54,7 +50,7 @@ function drawPolarChart(options, appData) {
     // var outerRadius = 50;
 
     var barsHeights = getBarsHeight(appData);
-    console.log(barsHeights);
+    console.log(barsHeights, appData);
 
     function getBarsLabels() {
         var labelsArr = [];
