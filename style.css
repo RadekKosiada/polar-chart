@@ -75,6 +75,9 @@ option:hover {
 
 /* NEW INPUTS */
 
+#input-vue {
+    display: inline-block;
+}
 .single-input {
     margin: 20px;
 }

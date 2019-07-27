@@ -36,77 +36,6 @@ var inputVue = new Vue({
     }
 });
 
-var app = new Vue({
-    el: '#app',
-    data: {
-        numberOfInputs: 11,
-        chartData: {
-            'Industrial': 80,
-            'Core AI': 25,
-            'VCs': 75,
-            'CVCs': 58,
-            'Acc/includ': 45
-        },
-        firstInput: 80,
-        secondInput: 25,
-        thirdInput: 75,
-        fourthInput: 58,
-        fifthInput: 45,
-
-        firstNm: 'Industrial',
-        secondNm: 'Core AI',
-        thirdNm: 'VCs',
-        fourthNm: 'CVCs',
-        fifthNm: 'Acc/includ',
-
-    },
-    methods: {
-        handleFirstInput(firstValue) { this.firstInput = firstValue; },
-        handleSecondInput(secondValue) { this.secondInput = secondValue; },
-        handleThirdInput(thirdValue) { this.thirdInput = thirdValue; },
-        handleFourthInput(fourthValue) { this.fourthInput = fourthValue; },
-        handleFifthInput(fifthValue) { this.fifthInput = fifthValue; },
-
-        handleFirstName(name1) { this.firstNm = name1 },
-        handleSecondName(name2) { this.secondNm = name2 },
-        handleThirdName(name3) { this.thirdNm = name3 },
-        handleFourthName(name4) { this.fourthNm = name4 },
-        handleFifthName(name5) { this.fifthNm = name5 },
-
-    },
-
-    mounted() {
-        console.log("", this.numberOfInputs)
-        console.log("chartData", this.chartData);
-        console.log(Object.values(this.chartData)[0])
-
-        Object.values(this.chartData)[0] = this.firstInput;
-    },
-
-    updated() {
-        this.chartData = {
-            'Industrial': Number(this.firstInput),
-            'Core AI': Number(this.secondInput),
-            'VCs': Number(this.thirdInput),
-            'CVCs': Number(this.fourthInput),
-            'Acc/includ': Number(this.fifthInput),
-        },
-            Object.keys(this.chartData)[10] = this.eleventhNm;
-
-        this.allCharts = document.getElementsByTagName("svg");
-        console.log(Object.keys(this.chartData)[0])
-
-        // if(this.allCharts.length =1) {
-        //     d3.select("svg").remove();
-        //     drawPolarChart(polarChartOptions, this.chartData);
-        // }    
-    }
-})
-
-// console.log(app._data.chartData);
-// console.log(Object.keys(app._data.chartData))
-// console.log(Object.keys(app._data.chartData).length)
-
 function drawPolarChart(options, appData) {
     // console.log(options, appData);
     //creating an svg node
@@ -378,8 +307,9 @@ function getBarsHeight(data) {
     return heightsArr;
 }
 
-var barsHeights = getBarsHeight(app._data.chartData);
-var theHighestBar = Math.max(...barsHeights);
+let barsHeights = getBarsHeight(inputVue.chartData2);
+
+let theHighestBar = Math.max(...barsHeights);
 
 // storing all the options of the chart in an object;
 // for easy access, if need to change;
