@@ -307,9 +307,10 @@ function getBarsHeight(data) {
     return heightsArr;
 }
 
-let barsHeights = getBarsHeight(inputVue.chartData2);
 
-let theHighestBar = Math.max(...barsHeights);
+var barsHeights = getBarsHeight(inputVue.chartData2);
+console.log(barsHeights);
+var theHighestBar = Math.max(...barsHeights);
 
 // storing all the options of the chart in an object;
 // for easy access, if need to change;
@@ -366,22 +367,18 @@ function mouseOverBar(index, event) {
     this.classList.add("activate")
     labelsArray[index].classList.add("active-title")
     // barsHeights[index]
-    toolTip.innerHTML = "Value: " + barsHeights[index];
-    toolTip.classList.remove("hide");
+    // toolTip.innerHTML = "Value: " + barsHeights[index];
+    // toolTip.classList.remove("hide");
 
     //event.clientY
     //event.clientX
-
-
-
-
 }
 
 function mouseOutBar(index) {
     this.classList.remove("activate")
     labelsArray[index].classList.remove("active-title")
-    toolTip.innerHTML = "";
-    toolTip.classList.add("hide");
+    // toolTip.innerHTML = "";
+    // toolTip.classList.add("hide");
 }
 
 
