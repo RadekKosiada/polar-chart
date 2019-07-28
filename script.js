@@ -9,21 +9,48 @@ var inputVue = new Vue({
             { label: 'VCs', rate: 75 },
             { label: 'CVCs', rate: 58 },
             { label: 'Acc/includ', rate: 45 }
-        ]
+        ],
+        fieldsCopy: [],
+        // fields2: [
+        //     {labels: ['Industrial', 'Core AI', 'VCs','CVCs', 'Acc/includ']},
+        //     {rates: [80, 25, 75, 58, 45]}
+        // ]
     },
     methods: {
+        updateLabels(e) {
+            this.fieldsCopy = this.fields;
+
+            console.log("fired", e.target.value, this.chartData2)
+            for(let i=0; i<this.fieldsCopy.length; i++) {
+                if(e.target.getAttribute("id") == i) {
+                    console.log(i, e.target.value)
+                    // this.fieldsCopy[i].label = e.target.value;
+                    delete Object.assign(this.fieldsCopy[i], {[e.target.value]: this.fieldsCopy[i].label}).label;
+                }
+            }
+            console.log(this.fieldsCopy)
+            // this.updateData();
+
+
+// zrobic kopie fields, zmienic, i w update sprawdzic czy fields kopia jest, jak nie to wziac to jako source, a jak tak, to wziac source of truth;
+        },
         updateData() {
             for (let i = 0; i < this.fields.length; i++) {
                 this.chartData2[this.fields[i].label] = this.fields[i].rate;
+                // this.chartData2[this.fields2[0].label] = this.fields[i].rate;
             }
         }
     },
     mounted() {
+        // this.updateLabels();
         this.updateData();
+        console.log(this.chartData2)
     },
 
     updated() {
+        console.log(this.fields[0].label)
         this.updateData();
+        this.updateLabels(event);
         let allCharts = document.getElementsByTagName("svg");
         if (allCharts.length = 1) {
             d3.select("svg").remove();
@@ -50,7 +77,6 @@ function drawPolarChart(options, appData) {
     // var outerRadius = 50;
 
     var barsHeights = getBarsHeight(appData);
-    console.log(barsHeights, appData);
 
     function getBarsLabels() {
         var labelsArr = [];
