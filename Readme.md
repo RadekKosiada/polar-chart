@@ -19,6 +19,15 @@ Vue.js
 8. Reversing the labels upside-down?
 
 
+branches
++ continents-no-inputs (old master branch;)
++ ddev-vue (main dev)
++ ddev-vue-labels (attempt to update labels in real time)
++ dev-vue (?)
++ master
+
+
+
 
 
 
