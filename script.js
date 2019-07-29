@@ -23,21 +23,6 @@ var inputVue = new Vue({
             // so the actual one is being reset and the also old values are gone;
             this.chartData = tempObj;
         },
-        // updateField(event, index) {            
-        //     let newLabel = event.target.value;
-        //     console.log(newLabel);
-            
-        //     this.fields = this.fields.map((field, i)=> {
-        //         if(index===i) {
-        //             return {
-        //                 label: newLabel,
-        //                 rate: field.rate
-        //             }
-        //         } else {
-        //             return field;
-        //         }
-        //     })
-        // }
 
     },
     mounted() {
