@@ -2,7 +2,7 @@ var inputVue = new Vue({
     el: "#input-vue",
     data: {
         value: null,
-        chartData2: {},
+        chartData: {},
         fields: [
             { label: 'Industrial', rate: 80 },
             { label: 'Core AI', rate: 25 },
@@ -13,10 +13,32 @@ var inputVue = new Vue({
     },
     methods: {
         updateData() {
-            for (let i = 0; i < this.fields.length; i++) {
-                this.chartData2[this.fields[i].label] = this.fields[i].rate;
-            }
-        }
+            //new object to make the operation on
+            let tempObj = {};
+            // iterate through the data
+            this.fields.forEach((field)=> {
+                tempObj[field.label] = field.rate;
+            }) 
+            //we assign the actual object to the one we made the operation
+            // so the actual one is being reset and the also old values are gone;
+            this.chartData = tempObj;
+        },
+        // updateField(event, index) {            
+        //     let newLabel = event.target.value;
+        //     console.log(newLabel);
+            
+        //     this.fields = this.fields.map((field, i)=> {
+        //         if(index===i) {
+        //             return {
+        //                 label: newLabel,
+        //                 rate: field.rate
+        //             }
+        //         } else {
+        //             return field;
+        //         }
+        //     })
+        // }
+
     },
     mounted() {
         this.updateData();
@@ -27,7 +49,7 @@ var inputVue = new Vue({
         let allCharts = document.getElementsByTagName("svg");
         if (allCharts.length = 1) {
             d3.select("svg").remove();
-            drawPolarChart(polarChartOptions, this.chartData2);
+            drawPolarChart(polarChartOptions, this.chartData);
         }
     }
 });
@@ -304,7 +326,7 @@ function getBarsHeight(data) {
 }
 
 
-var barsHeights = getBarsHeight(inputVue.chartData2);
+var barsHeights = getBarsHeight(inputVue.chartData);
 console.log(barsHeights);
 var theHighestBar = Math.max(...barsHeights);
 
@@ -341,7 +363,7 @@ var polarChartOptions = {
     }
 }
 
-drawPolarChart(polarChartOptions, inputVue.chartData2);
+drawPolarChart(polarChartOptions, inputVue.chartData);
 
 // MOUSE EFFECTS
 var barsArray = document.getElementsByClassName("bars");
