@@ -4,12 +4,17 @@ var inputVue = new Vue({
         value: null,
         chartData: {},
         fields: [
-            { label: 'Industrial', rate: 80 },
-            { label: 'Core AI', rate: 25 },
-            { label: 'VCs', rate: 75 },
-            { label: 'CVCs', rate: 58 },
-            { label: 'Acc/includ', rate: 45 }
+            { label: 'Humbleness', rate: 50 },
+            { label: 'Creativity', rate: 50 },
+            { label: 'Continuously learning', rate: 50 },
+            { label: 'Team player', rate: 50 },
+            { label: 'Problem-solving mindset', rate: 50 }
         ]
+
+        // https://medium.com/@CodementorIO/good-developers-vs-bad-developers-fe9d2d6b582b
+
+        // https://blog.teamtreehouse.com/8-characteristics-of-a-good-developer
+        
     },
     methods: {
         updateData() {
@@ -26,6 +31,7 @@ var inputVue = new Vue({
 
     },
     mounted() {
+        console.log(this)
         this.updateData();
     },
 
@@ -38,6 +44,8 @@ var inputVue = new Vue({
         }
     }
 });
+
+console.log(inputVue.chartData)
 
 function drawPolarChart(options, appData) {
     // console.log(options, appData);
@@ -110,17 +118,17 @@ function drawPolarChart(options, appData) {
     var counter = 0;
     var num = barsArr.length / numColors
     for (var i = 0; i < barsArr.length; i++) {
-        if (i < 2) {
-            counter++;
-            barsArr[i].setAttribute("fill", options.c.orange);
-            // console.log("0", counter);
-        } else if (i < 4) {
-            counter++;
-            barsArr[i].setAttribute("fill", options.c.green);
-            // console.log("1", counter);        
-        } else if (i < 8) {
+        if (i ==0) {
             counter++;
             barsArr[i].setAttribute("fill", options.c.blue);
+            // console.log("0", counter);
+        } else if (i ==1) {
+            counter++;
+            barsArr[i].setAttribute("fill", options.c.purple);
+            // console.log("1", counter);        
+        } else if (i ==2) {
+            counter++;
+            barsArr[i].setAttribute("fill", options.c.red);
             // console.log("2", counter);          
         } else {
             counter++;
@@ -128,6 +136,14 @@ function drawPolarChart(options, appData) {
             // console.log("3", counter);
         }
     }
+
+    // barsArr[0].setAttribute("fill", options.c.blue);
+    // barsArr[1].setAttribute("fill", options.c.purple);
+    // barsArr[2].setAttribute("fill", options.c.red);
+    // barsArr[3].setAttribute("fill", options.c.orange);
+    // barsArr[4].setAttribute("fill", options.c.yellow);
+    // barsArr[5].setAttribute("fill", options.c.green);
+
 
     ////// CIRCLES ///////////////////////
     var firstLevel = 0;
@@ -338,13 +354,12 @@ var polarChartOptions = {
     legendFontSize: 10,
     labelFontSize: 10,
     c: {
-        black: "black",
-        grey: "rgb(142, 154, 175)",
-        orange: "rgb(255, 96, 17)",
-        green: "rgb(151, 216, 157)",
-        blue: "rgb(51, 140, 204)",
-        darkblue: "rgb(41, 47, 104)",
-        purple: "rgb(162, 136, 227)"
+        blue: "blue",
+        purple: "purple",
+        red: "red",
+        orange: "orange",
+        yellow: "yellow",
+        green: "green"
     }
 }
 
